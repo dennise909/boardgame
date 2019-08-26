@@ -1,0 +1,85 @@
+#container{
+  margin: 3% auto;
+  max-width: 600px;
+}
+
+#boardPlayeOne{
+  margin: 2px solid green;
+  float:left;
+  width: 372px;
+  height: 631px;
+}
+
+h1{
+  display: block;
+  text-align: center;
+  color: #F84083;
+  padding-top: 40px;
+}
+
+h3{
+  display: block;
+  text-align: center;
+  color: #F84083;
+  padding-top: 40px;
+}
+h4{
+  display: block;
+  text-align: left;
+  color:green;
+  padding-top: 40px;
+  padding-left: 40px;
+}
+
+.column {
+  float: left;
+}
+
+.left, .right {
+  width: 25%;
+  border: 2px solid #D740F8;
+}
+
+.middle {
+  width: 50%;
+}
+
+.myclass{
+    width: 60px;
+    height: 60px;
+    display: block;
+    float:left;
+    border: 2px solid #D740F8;
+}
+.clear{
+  clear: left;
+}
+
+img {
+  position: relative;
+  display: block;
+  margin: auto;
+  width: 80%;
+  height: 80%;
+  padding-top: 5px;
+}
+
+img.small{
+  width: 25% !important;
+  height: 25% !important;
+  padding-top: 5px;
+}
+
+.dimmcell{
+  background: #D740F8;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+
+.highlight{
+  border-color: blue;
+}
