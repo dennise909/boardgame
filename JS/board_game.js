@@ -311,7 +311,16 @@ var rand = randomNum();
       newAvailable[random].classList.add('dimmcell');
       newAvailable[random].classList.remove('Available');
       newAvailable[random].classList.add('Taken'); 
-
+ 
+  function getRandomBlock(minX=0, maxX=9, minY=0, maxY=9) {
+    var rand = null;
+    do {
+      var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+      var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+      rand = window.map[x][y];
+    } while (rand.classList.contains('Available') == false);
+    return rand;
+  }
 
 
 
