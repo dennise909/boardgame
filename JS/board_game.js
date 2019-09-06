@@ -322,7 +322,19 @@ var rand = randomNum();
     return rand;
   }
 
-
+var neighbours = [];  
+   // function()
+    var maxSteps = 3;
+    for (var _x = -maxSteps; _x < maxSteps; _x++) {
+      if (pos.x + _x >= 0 && pos.x + _x < 10) {
+        var neighbour = window.map[pos.x - _x][pos.y];
+        neighbours.push(neighbour);
+        neighbours.forEach(function (element) {
+        element.classList.add('highlight');
+      }
+        )}
+    }
+    for (var _y = -maxSteps; _y < maxSteps; _y++) {
 
 
     }
