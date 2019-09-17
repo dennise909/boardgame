@@ -58,15 +58,21 @@ window.onload = function () {
   }
   function Addweapon(weapon) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     var rand = getRandomBlock();
       rand.appendChild(weapon);
       rand.classList.remove('Available');
       rand.classList.add('Taken');
 =======
+=======
+>>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
     var rand = randomNumAvailable();
     rand.appendChild(weapon);
     rand.classList.remove('Available');
     rand.classList.add('Taken');
+<<<<<<< HEAD
+>>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
+=======
 >>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
   }
 
@@ -169,6 +175,7 @@ window.onload = function () {
       if (pos.x + _x >= 0 && pos.x + _x < 10) {
         var neighbour = window.map[pos.x - _x][pos.y];
         neighbours.push(neighbour);
+<<<<<<< HEAD
       }
     }
     
@@ -202,6 +209,11 @@ window.onload = function () {
         neighbours.forEach(function (element) {
         element.classList.add('highlight');
       }
+=======
+        neighbours.forEach(function (element) {
+        element.classList.add('highlight');
+      }
+>>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
         )}
     }
     for (var _y = -maxSteps; _y < maxSteps; _y++) {
@@ -318,6 +330,7 @@ window.onload = function () {
     rand.classList.remove('Available');
     rand.classList.add('Taken');*/
 <<<<<<< HEAD
+<<<<<<< HEAD
  
     for (var f = 0; f < 10; f++) {
       var rand = getRandomBlock();
@@ -337,6 +350,8 @@ window.onload = function () {
   rand.classList.add('Taken');
 =======
 >>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
+=======
+>>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
 
   for (var f = 0; f < 10; f++) {
     var rand = getRandomBlock();
@@ -345,6 +360,7 @@ window.onload = function () {
     rand.classList.add('Taken');
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       var availableCells = $('div.Available');
           newAvailable = [];
@@ -365,10 +381,15 @@ window.onload = function () {
       return rand;
     }
 =======
+=======
+>>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
   var rand = getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 3);
   rand.appendChild(playerOne);
   rand.classList.remove('Available');
   rand.classList.add('Taken');
+<<<<<<< HEAD
+>>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
+=======
 >>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
 
 
