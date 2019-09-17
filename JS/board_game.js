@@ -58,7 +58,7 @@ window.onload = function () {
 
   }
   function Addweapon(weapon) {
-    var rand = randomNumAvailable();
+    var rand = getRandomBlock();
       rand.appendChild(weapon);
       rand.classList.remove('Available');
       rand.classList.add('Taken');
@@ -159,7 +159,36 @@ function getGrid() {
   Addweapon(weaponTree);
   Addweapon(weaponFour);
 
+  $('div.myclass').click(function () {
+    let pos = this.position;
+    console.log(pos);
+    var neighbours = [];  
+   // function()
+    var maxSteps = 3;
+    for (var _x = -maxSteps; _x < maxSteps; _x++) {
+      if (pos.x + _x >= 0 && pos.x + _x < 10) {
+        var neighbour = window.map[pos.x - _x][pos.y];
+        neighbours.push(neighbour);
+      }
+    }
+    
+    for (var _y = -maxSteps; _y < maxSteps; _y++) {
+      if (pos.y + _y >= 0 && pos.y + _y < 10) {
+        var neighbour = window.map[pos.x][pos.y - _y];
+        neighbours.push(neighbour);
+      }
+    }
+    neighbours.forEach(function (element) {
+    element.classList.add('highlight');
+      
+      })
+    console.log(neighbours);
+  });
 
+  
+    
+
+    /*
   $('div.myclass').click(function () {
     let pos = this.position;
     console.log(pos);
@@ -276,23 +305,22 @@ var rand = randomNum();
     rand.classList.remove('Available');
     rand.classList.add('Taken');*/
  
-   for (var f=0; f < 10; f++){
-     var rand = randomNumAvailable(); 
-    for (var l=0; l < $availableCells.length; l++){        
-        rand.classList.add('dimmcell');
-        rand.classList.remove('Available');
-        rand.classList.add('Taken') 
-      }
+    for (var f = 0; f < 10; f++) {
+      var rand = getRandomBlock();
+      rand.classList.add('dimmcell');
+      rand.classList.remove('Available');
+      rand.classList.add('Taken');
     }
       
-    var rand = randomNumAvailable();
-        pos = rand.position;
-      //console.log(pos);
-      if (pos.x < 10 && pos.y < 4){
-      rand.appendChild(playerOne);
-      rand.classList.remove('Available');
-      rand.classList.add('Taken');}
+  var rand = getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 3);
+  rand.appendChild(playerOne);
+  rand.classList.remove('Available');
+  rand.classList.add('Taken');
 
+  var rand = getRandomBlock(minX = 0, maxX = 9, minY = 6, maxY = 9);
+  rand.appendChild(playerTwo);
+  rand.classList.remove('Available');
+  rand.classList.add('Taken');
 
       function randomNumSet(number) {
         var random = Math.floor(Math.random() * number) + 1
@@ -307,10 +335,16 @@ var rand = randomNum();
           newAvailable.push(por);
       }
     }
-    var random = Math.floor(Math.random() * newAvailable.length);
-      newAvailable[random].classList.add('dimmcell');
-      newAvailable[random].classList.remove('Available');
-      newAvailable[random].classList.add('Taken'); 
+   
+    function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
+      var rand = null;
+      do {
+        var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+        var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+        rand = window.map[x][y];
+      } while (rand.classList.contains('Available') == false);
+      return rand;
+    }
 
 
 
