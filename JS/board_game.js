@@ -57,23 +57,14 @@ window.onload = function () {
 
   }
   function Addweapon(weapon) {
-<<<<<<< HEAD
-<<<<<<< HEAD
     var rand = getRandomBlock();
       rand.appendChild(weapon);
       rand.classList.remove('Available');
       rand.classList.add('Taken');
-=======
-=======
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
     var rand = randomNumAvailable();
     rand.appendChild(weapon);
     rand.classList.remove('Available');
     rand.classList.add('Taken');
-<<<<<<< HEAD
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
-=======
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
   }
 
   function Addweapon2(weapon) {
@@ -165,24 +156,25 @@ window.onload = function () {
   Addweapon(weaponTree);
   Addweapon(weaponFour);
 
+
+// Possible moves from player
   $('div.myclass').click(function () {
     let pos = this.position;
     console.log(pos);
     var neighbours = [];  
    // function()
-    var maxSteps = 3;
+    var maxSteps = 4;
     for (var _x = -maxSteps; _x < maxSteps; _x++) {
       if (pos.x + _x >= 0 && pos.x + _x < 10) {
         var neighbour = window.map[pos.x - _x][pos.y];
         neighbours.push(neighbour);
-<<<<<<< HEAD
       }
     }
     
     for (var _y = -maxSteps; _y < maxSteps; _y++) {
       if (pos.y + _y >= 0 && pos.y + _y < 10) {
         var neighbour = window.map[pos.x][pos.y - _y];
-        neighbours.push(neighbour);
+            neighbours.push(neighbour);
       }
     }
     neighbours.forEach(function (element) {
@@ -209,11 +201,6 @@ window.onload = function () {
         neighbours.forEach(function (element) {
         element.classList.add('highlight');
       }
-=======
-        neighbours.forEach(function (element) {
-        element.classList.add('highlight');
-      }
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
         )}
     }
     for (var _y = -maxSteps; _y < maxSteps; _y++) {
@@ -329,8 +316,6 @@ window.onload = function () {
     rand.appendChild(playerOne);
     rand.classList.remove('Available');
     rand.classList.add('Taken');*/
-<<<<<<< HEAD
-<<<<<<< HEAD
  
     for (var f = 0; f < 10; f++) {
       var rand = getRandomBlock();
@@ -348,10 +333,6 @@ window.onload = function () {
   rand.appendChild(playerTwo);
   rand.classList.remove('Available');
   rand.classList.add('Taken');
-=======
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
-=======
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
 
   for (var f = 0; f < 10; f++) {
     var rand = getRandomBlock();
@@ -360,8 +341,6 @@ window.onload = function () {
     rand.classList.add('Taken');
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
       var availableCells = $('div.Available');
           newAvailable = [];
       for (var h=0; h < availableCells.length; h++){
@@ -380,17 +359,10 @@ window.onload = function () {
       } while (rand.classList.contains('Available') == false);
       return rand;
     }
-=======
-=======
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
   var rand = getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 3);
   rand.appendChild(playerOne);
   rand.classList.remove('Available');
   rand.classList.add('Taken');
-<<<<<<< HEAD
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
-=======
->>>>>>> 8921db54da5cec74289fa731963c8eaac40976f0
 
 
   function randomNumSet(number) {
