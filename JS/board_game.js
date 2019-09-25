@@ -187,6 +187,7 @@ window.onload = function () {
 
   $('div.myclass').click(function (event){
     $("[name=zombie]").remove();
+    $('div.myclass').removeClass('highlight');
     appendWeapon(playerOne,this);
   })
 
