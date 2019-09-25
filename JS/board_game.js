@@ -36,7 +36,7 @@ window.onload = function () {
   weaponTree = createWeapons('dog', 'Imgs/dog.png');
   weaponFour = createWeapons('penguin', 'Imgs/penguin.png');
   playerOne = createWeapons('zombie', 'Imgs/zombie.png');
-  playerTwo = createWeapons('zombie', 'Imgs/adventurer_jump.png');
+  playerTwo = createWeapons('adventurer', 'Imgs/adventurer_jump.png');
   rand = randomNum();
 
 
@@ -45,15 +45,17 @@ window.onload = function () {
     return divs[random];
   }
 
-  function createWeapons(nameAnimal, sourcePath) {
+  function createWeapons(nameAnimal1, sourcePath) {
     var nameAnimal = document.createElement('img');
     nameAnimal.setAttribute('src', sourcePath);
+    nameAnimal.setAttribute('name', nameAnimal1);
     return nameAnimal
   }
 
-  function appendWeapon(nameWeapon) {
-    let rand = randomNum();
-    rand.appendChild(nameWeapon);
+  function appendWeapon(nameWeapon,element) {
+    element.appendChild(nameWeapon);
+    element.classList.remove('Available');
+    element.classList.add('Taken');
 
   }
   function Addweapon(weapon) {
@@ -163,7 +165,7 @@ window.onload = function () {
     console.log(pos);
     var neighbours = [];  
    // function()
-    var maxSteps = 4;
+    var maxSteps = 3;
     for (var _x = -maxSteps; _x < maxSteps; _x++) {
       if (pos.x + _x >= 0 && pos.x + _x < 10) {
         var neighbour = window.map[pos.x - _x][pos.y];
@@ -181,11 +183,12 @@ window.onload = function () {
     element.classList.add('highlight');
       
       })
-    console.log(neighbours);
   });
 
-  
-    
+  $('div.myclass').click(function (event){
+    $("[name=zombie]").remove();
+    appendWeapon(playerOne,this);
+  })
 
     /*
   $('div.myclass').click(function () {
