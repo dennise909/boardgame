@@ -397,15 +397,15 @@ var rand = randomNum();
       element.classList.add('highlight');
 
     });
-
+    // move player
     $('div.Available.highlight').click(function () {
     $("[name=zombie]").remove();
     //$('div.myclass').removeClass('highlight');
     appendWeapon(playerOne,this);
-});
+    });
   });
 
-// move player
+
 
 
 
