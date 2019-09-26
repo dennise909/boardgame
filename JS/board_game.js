@@ -52,7 +52,7 @@ window.onload = function () {
     return nameAnimal
   }
 
-  function appendWeapon(nameWeapon,element) {
+  function appendWeapon(nameWeapon, element) {
     element.appendChild(nameWeapon);
     element.classList.remove('Available');
     element.classList.add('Taken');
@@ -60,9 +60,9 @@ window.onload = function () {
   }
   function Addweapon(weapon) {
     var rand = getRandomBlock();
-      rand.appendChild(weapon);
-      rand.classList.remove('Available');
-      rand.classList.add('Taken');
+    rand.appendChild(weapon);
+    rand.classList.remove('Available');
+    rand.classList.add('Taken');
     var rand = randomNumAvailable();
     rand.appendChild(weapon);
     rand.classList.remove('Available');
@@ -113,7 +113,6 @@ window.onload = function () {
  }
  var rand = findAvailable
  //add dimmcell
-
  for (var f=0; f < 10; f++){
    while (rand.classList.contains('Avalable')){
        var rand = randomNum();
@@ -159,153 +158,152 @@ window.onload = function () {
   Addweapon(weaponFour);
 
 
-// Possible moves from player
-  $('div.myclass').click(function () {
-    let pos = this.position;
-    console.log(pos);
-    var neighbours = [];  
-   // function()
-    var maxSteps = 3;
-    for (var _x = -maxSteps; _x < maxSteps; _x++) {
-      if (pos.x + _x >= 0 && pos.x + _x < 10) {
-        var neighbour = window.map[pos.x - _x][pos.y];
-        neighbours.push(neighbour);
-      }
-    }
-    
-    for (var _y = -maxSteps; _y < maxSteps; _y++) {
-      if (pos.y + _y >= 0 && pos.y + _y < 10) {
-        var neighbour = window.map[pos.x][pos.y - _y];
-            neighbours.push(neighbour);
-      }
-    }
-    neighbours.forEach(function (element) {
-    element.classList.add('highlight');
-      
-      })
-  });
 
-  $('div.myclass').click(function (event){
-    $("[name=zombie]").remove();
-    $('div.myclass').removeClass('highlight');
-    appendWeapon(playerOne,this);
-  })
-
-    /*
-  $('div.myclass').click(function () {
-    let pos = this.position;
-    console.log(pos);
-    var neighbours = [];  
-   // function()
-    var maxSteps = 3;
-    for (var _x = -maxSteps; _x < maxSteps; _x++) {
-      if (pos.x + _x >= 0 && pos.x + _x < 10) {
-        var neighbour = window.map[pos.x - _x][pos.y];
-        neighbours.push(neighbour);
-        neighbours.forEach(function (element) {
-        element.classList.add('highlight');
-      }
-        )}
-    }
-    for (var _y = -maxSteps; _y < maxSteps; _y++) {
-
-    }
-    
-    if (pos.x - 1 >= 0) {
-      var neighbour = window.map[pos.x - 1][pos.y];
-      var neighbour1 = window.map[pos.x - 2][pos.y];
-      var neighbour2 = window.map[pos.x - 3][pos.y];
-      var neighbour3 = window.map[pos.x + 1][pos.y];
-      var neighbour4 = window.map[pos.x + 2][pos.y];
-      var neighbour5 = window.map[pos.x + 3][pos.y];
-      neighbours.push(neighbour, neighbour1, neighbour2, neighbour3, neighbour4, neighbour5);
-      neighbours.forEach(function (element) {
-        element.classList.add('highlight');
-      });
-    }
-    if (pos.y - 1 >= 0) {
-      var neighbour = window.map[pos.x][pos.y - 1];
-      var neighbour1 = window.map[pos.x][pos.y - 2];
-      var neighbour2 = window.map[pos.x][pos.y - 3];
-      var neighbour3 = window.map[pos.x][pos.y + 1];
-      var neighbour4 = window.map[pos.x][pos.y + 2];
-      var neighbour5 = window.map[pos.x][pos.y + 3];
-      neighbours.push(neighbour, neighbour1, neighbour2, neighbour3, neighbour4, neighbour5);
-      neighbours.forEach(function (element) {
-        element.classList.add('highlight');
-      });
-    }
-
-    if (pos.x + 1 < 10) {
-      var neighbour = window.map[pos.x - 1][pos.y];
-      var neighbour1 = window.map[pos.x - 2][pos.y];
-      var neighbour2 = window.map[pos.x - 3][pos.y];
-      var neighbour3 = window.map[pos.x + 1][pos.y];
-      var neighbour4 = window.map[pos.x + 2][pos.y];
-      var neighbour5 = window.map[pos.x + 3][pos.y];
-      neighbours.push(neighbour, neighbour1, neighbour2, neighbour3, neighbour4, neighbour5);
-      neighbours.forEach(function (element) {
-        element.classList.add('highlight');
-      });
-    }
-
-    if (pos.y + 1 < 10) {
-      var neighbour = window.map[pos.x][pos.y - 1];
-      var neighbour1 = window.map[pos.x][pos.y - 2];
-      var neighbour2 = window.map[pos.x][pos.y - 3];
-      var neighbour3 = window.map[pos.x][pos.y + 1];
-      var neighbour4 = window.map[pos.x][pos.y + 2];
-      var neighbour5 = window.map[pos.x][pos.y + 3];
-      neighbours.push(neighbour, neighbour1, neighbour2, neighbour3, neighbour4, neighbour5);
-      neighbours.forEach(function (element) {
-        element.classList.add('highlight');
-      });
-    }
-
-  });
   /*
-    $('div.myclass').click(function () {
-    var $row = String($(this).data('row') + 1);
-    $col = $(this).data('col');
-    //$hola = $(this).data({'data-row':$row,'data-col':$col});
-    $currentrow = $('div[data-row="' + $row + '"][data-col="' + $col + '"]');
-    $currentrow.addClass('highlight');
-    //console.log($currentrow);
-  })
-  
-  //var $linea = $('div.myclass').eq(0).data('row')+1;
-  //String($linea)
-  //places players randomlyon the board
-  var rand = randomNum();
-    if (rand.classList.contains('Available') == true) {
-      pos = rand.position;
+  // Possible moves from player
+  $("div.myclass").click(function () {
+      let pos = this.position;
       console.log(pos);
-      if (pos.x < 10 && pos.y < 4){
-      rand.appendChild(playerOne);
-      rand.classList.remove('Available');
-      rand.classList.add('Taken');}
+      var neighbours = [];  
+     // function()
+      var maxSteps = 3;
+      for (var _x = -maxSteps; _x < maxSteps; _x++) {
+        if (pos.x + _x >= 0 && pos.x + _x < 10) {
+          var neighbour = window.map[pos.x - _x][pos.y];
+          neighbours.push(neighbour);
+        }
+      }
       
-    } else {
-      divs[0].appendChild(playerOne);
-      divs[0].classList.remove('Available');
-      divs[0].classList.add('Taken');
+      for (var _y = -maxSteps; _y < maxSteps; _y++) {
+        if (pos.y + _y >= 0 && pos.y + _y < 10) {
+          var neighbour = window.map[pos.x][pos.y - _y];
+              neighbours.push(neighbour);
+        }
+      }
+      neighbours.forEach(function (element) {
+      element.classList.add('highlight');
+        
+        })
+    });
+    */
+  ///
+  //  $('div.myclass').click(function (event){
+  //   $("[name=zombie]").remove();
+  //   $('div.myclass').removeClass('highlight');
+  //   appendWeapon(playerOne,this);
+  // })
+
+  /*
+$('div.myclass').click(function () {
+  let pos = this.position;
+  console.log(pos);
+  var neighbours = [];  
+ // function()
+  var maxSteps = 3;
+  for (var _x = -maxSteps; _x < maxSteps; _x++) {
+    if (pos.x + _x >= 0 && pos.x + _x < 10) {
+      var neighbour = window.map[pos.x - _x][pos.y];
+      neighbours.push(neighbour);
+      neighbours.forEach(function (element) {
+      element.classList.add('highlight');
     }
-  var rand = randomNum();
-    if (rand.classList.contains('Available') == true) {
-      pos = rand.position;
-      console.log(pos);
-      if (pos.x < 10 && pos.y > 6){
-      rand.appendChild(playerTwo);
-      rand.classList.remove('Available');
-      rand.classList.add('Taken');}
-      
-    } else {
-      divs[99].appendChild(playerTwo);
-      divs[99].classList.remove('Available');
-      divs[99].classList.add('Taken');
-    }
+      )}
   }
-  */
+  for (var _y = -maxSteps; _y < maxSteps; _y++) {
+  }
+  
+  if (pos.x - 1 >= 0) {
+    var neighbour = window.map[pos.x - 1][pos.y];
+    var neighbour1 = window.map[pos.x - 2][pos.y];
+    var neighbour2 = window.map[pos.x - 3][pos.y];
+    var neighbour3 = window.map[pos.x + 1][pos.y];
+    var neighbour4 = window.map[pos.x + 2][pos.y];
+    var neighbour5 = window.map[pos.x + 3][pos.y];
+    neighbours.push(neighbour, neighbour1, neighbour2, neighbour3, neighbour4, neighbour5);
+    neighbours.forEach(function (element) {
+      element.classList.add('highlight');
+    });
+  }
+  if (pos.y - 1 >= 0) {
+    var neighbour = window.map[pos.x][pos.y - 1];
+    var neighbour1 = window.map[pos.x][pos.y - 2];
+    var neighbour2 = window.map[pos.x][pos.y - 3];
+    var neighbour3 = window.map[pos.x][pos.y + 1];
+    var neighbour4 = window.map[pos.x][pos.y + 2];
+    var neighbour5 = window.map[pos.x][pos.y + 3];
+    neighbours.push(neighbour, neighbour1, neighbour2, neighbour3, neighbour4, neighbour5);
+    neighbours.forEach(function (element) {
+      element.classList.add('highlight');
+    });
+  }
+  if (pos.x + 1 < 10) {
+    var neighbour = window.map[pos.x - 1][pos.y];
+    var neighbour1 = window.map[pos.x - 2][pos.y];
+    var neighbour2 = window.map[pos.x - 3][pos.y];
+    var neighbour3 = window.map[pos.x + 1][pos.y];
+    var neighbour4 = window.map[pos.x + 2][pos.y];
+    var neighbour5 = window.map[pos.x + 3][pos.y];
+    neighbours.push(neighbour, neighbour1, neighbour2, neighbour3, neighbour4, neighbour5);
+    neighbours.forEach(function (element) {
+      element.classList.add('highlight');
+    });
+  }
+  if (pos.y + 1 < 10) {
+    var neighbour = window.map[pos.x][pos.y - 1];
+    var neighbour1 = window.map[pos.x][pos.y - 2];
+    var neighbour2 = window.map[pos.x][pos.y - 3];
+    var neighbour3 = window.map[pos.x][pos.y + 1];
+    var neighbour4 = window.map[pos.x][pos.y + 2];
+    var neighbour5 = window.map[pos.x][pos.y + 3];
+    neighbours.push(neighbour, neighbour1, neighbour2, neighbour3, neighbour4, neighbour5);
+    neighbours.forEach(function (element) {
+      element.classList.add('highlight');
+    });
+  }
+});
+/*
+  $('div.myclass').click(function () {
+  var $row = String($(this).data('row') + 1);
+  $col = $(this).data('col');
+  //$hola = $(this).data({'data-row':$row,'data-col':$col});
+  $currentrow = $('div[data-row="' + $row + '"][data-col="' + $col + '"]');
+  $currentrow.addClass('highlight');
+  //console.log($currentrow);
+})
+ 
+//var $linea = $('div.myclass').eq(0).data('row')+1;
+//String($linea)
+//places players randomlyon the board
+var rand = randomNum();
+  if (rand.classList.contains('Available') == true) {
+    pos = rand.position;
+    console.log(pos);
+    if (pos.x < 10 && pos.y < 4){
+    rand.appendChild(playerOne);
+    rand.classList.remove('Available');
+    rand.classList.add('Taken');}
+    
+  } else {
+    divs[0].appendChild(playerOne);
+    divs[0].classList.remove('Available');
+    divs[0].classList.add('Taken');
+  }
+var rand = randomNum();
+  if (rand.classList.contains('Available') == true) {
+    pos = rand.position;
+    console.log(pos);
+    if (pos.x < 10 && pos.y > 6){
+    rand.appendChild(playerTwo);
+    rand.classList.remove('Available');
+    rand.classList.add('Taken');}
+    
+  } else {
+    divs[99].appendChild(playerTwo);
+    divs[99].classList.remove('Available');
+    divs[99].classList.add('Taken');
+  }
+}
+*/
 
 
   //$('.my-class[data-id="' + dataId + '"][data-id-index="'+dataIdIndex+'"]')
@@ -320,21 +318,27 @@ window.onload = function () {
     rand.appendChild(playerOne);
     rand.classList.remove('Available');
     rand.classList.add('Taken');*/
- 
-    for (var f = 0; f < 10; f++) {
-      var rand = getRandomBlock();
-      rand.classList.add('dimmcell');
-      rand.classList.remove('Available');
-      rand.classList.add('Taken');
-    }
-      
+
+  function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
+    var rand = null;
+      do {
+        var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+        var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+        rand = window.map[x][y];
+      } while (rand.classList.contains('Available') == false);
+      return rand;
+  }
+
+
   var rand = getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 3);
   rand.appendChild(playerOne);
+  playerOne.currentBlock = rand;
   rand.classList.remove('Available');
   rand.classList.add('Taken');
 
   var rand = getRandomBlock(minX = 0, maxX = 9, minY = 6, maxY = 9);
   rand.appendChild(playerTwo);
+  playerTwo.currentBlock = rand;
   rand.classList.remove('Available');
   rand.classList.add('Taken');
 
@@ -345,29 +349,14 @@ window.onload = function () {
     rand.classList.add('Taken');
   }
 
-      var availableCells = $('div.Available');
-          newAvailable = [];
-      for (var h=0; h < availableCells.length; h++){
-        por = availableCells[h].position;
-        if (por.x < 10 && por.y < 4){
-          newAvailable.push(por);
-      }
+  var availableCells = $('div.Available');
+  newAvailable = [];
+  for (var h = 0; h < availableCells.length; h++) {
+    por = availableCells[h].position;
+    if (por.x < 10 && por.y < 4) {
+      newAvailable.push(por);
     }
-   
-    function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
-      var rand = null;
-      do {
-        var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-        var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-        rand = window.map[x][y];
-      } while (rand.classList.contains('Available') == false);
-      return rand;
-    }
-  var rand = getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 3);
-  rand.appendChild(playerOne);
-  rand.classList.remove('Available');
-  rand.classList.add('Taken');
-
+  }
 
   function randomNumSet(number) {
     var random = Math.floor(Math.random() * number) + 1
@@ -382,10 +371,6 @@ window.onload = function () {
       newAvailable.push(por);
     }
   }
-  var random = Math.floor(Math.random() * newAvailable.length);
-  newAvailable[random].classList.add('dimmcell');
-  newAvailable[random].classList.remove('Available');
-  newAvailable[random].classList.add('Taken');
 
   function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
     var rand = null;
@@ -397,6 +382,34 @@ window.onload = function () {
     return rand;
   }
 
+  $("[name=zombie").click(function () {
+    let pos = this.currentBlock.position;
+    console.log(pos);
+    var neighbours = [];
+    var maxSteps = 3;
+    for (var _x = -maxSteps; _x < maxSteps; _x++) {
+      if (pos.x + _x >= 0 && pos.x + _x < 10) {
+        var neighbour = window.map[pos.x + _x][pos.y];
+        neighbours.push(neighbour);
+      }
+    }    for (var _y = -maxSteps; _y < maxSteps; _y++) {
+      if (pos.y + _y >= 0 && pos.y + _y < 10) {
+        var neighbour = window.map[pos.x][pos.y + _y];
+        neighbours.push(neighbour);
+      }
+    }
+    neighbours.forEach(function (element) {
+      element.classList.add('highlight');
+
+    })
+  });
+
+
+ $('div.myclass').click(function (event){
+ $("[name=zombie]").remove();
+//$('div.myclass').removeClass('highlight');
+ appendWeapon(playerOne,this);
+});
 }
     
  
