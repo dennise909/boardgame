@@ -318,7 +318,6 @@ var rand = randomNum();
     rand.appendChild(playerOne);
     rand.classList.remove('Available');
     rand.classList.add('Taken');*/
-
   function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
     var rand = null;
       do {
@@ -329,6 +328,12 @@ var rand = randomNum();
       return rand;
   }
 
+  for (var f = 0; f < 10; f++) {
+    var rand = getRandomBlock();
+    rand.classList.add('dimmcell');
+    rand.classList.remove('Available');
+    rand.classList.add('Taken');
+  }
 
   var rand = getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 3);
   rand.appendChild(playerOne);
@@ -372,16 +377,6 @@ var rand = randomNum();
     }
   }
 
-  function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
-    var rand = null;
-    do {
-      var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-      var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-      rand = window.map[x][y];
-    } while (rand.classList.contains('Available') == false);
-    return rand;
-  }
-
   $("[name=zombie").click(function () {
     let pos = this.currentBlock.position;
     console.log(pos);
@@ -411,5 +406,4 @@ var rand = randomNum();
  appendWeapon(playerOne,this);
 });
 }
-    
- 
+
