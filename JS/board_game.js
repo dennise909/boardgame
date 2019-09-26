@@ -396,14 +396,25 @@ var rand = randomNum();
     neighbours.forEach(function (element) {
       element.classList.add('highlight');
 
-    })
+    });
+
+    $('div.Available.highlight').click(function () {
+    $("[name=zombie]").remove();
+    //$('div.myclass').removeClass('highlight');
+    appendWeapon(playerOne,this);
+});
   });
 
+// move player
 
- $('div.myclass').click(function (event){
- $("[name=zombie]").remove();
-//$('div.myclass').removeClass('highlight');
- appendWeapon(playerOne,this);
-});
+
+
+
+
+
+
+
+
 }
+
 
