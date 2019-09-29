@@ -124,13 +124,6 @@ window.onload = function () {
   rand.classList.remove('Available');
   rand.classList.add('Taken');
 
-  for (var f = 0; f < 10; f++) {
-    var rand = getRandomBlock();
-    rand.classList.add('dimmcell');
-    rand.classList.remove('Available');
-    rand.classList.add('Taken');
-  }
-
   var availableCells = $('div.Available');
   newAvailable = [];
   for (var h = 0; h < availableCells.length; h++) {
@@ -172,15 +165,16 @@ window.onload = function () {
     return neighbours;
   }
 
-  var currentPlayer = playerOne;
+  var currentPlayer = playerTwo;
   
+  //highlight neighbors
   $(currentPlayer).click(function () {
     let pos = this.currentBlock.position;
     var neighbours = getNeigbours(pos);
     neighbours.forEach(function (element) {
       element.classList.add('highlight');
     });
-    // move player
+    // move player to highlight cell
     $('div.Available.highlight').click(function onHighlightClick() {
       $('div.Available.highlight').off('click');
       var currentPlayerPosition = $(currentPlayer)[0];
@@ -200,6 +194,16 @@ window.onload = function () {
     });
   });
 
+  var player_one = 1;
+function display_input(square){ 
+    if ( player_one == 1 ){
+        document.getElementById(square).innerHTML = "X";
+        player_one = 0;
+    } else {
+        document.getElementById(square).innerHTML = "O";    
+        player_one = 1;
+    }   
+}
 
 
 
