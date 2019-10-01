@@ -95,6 +95,7 @@ window.onload = function () {
     rand.appendChild(playerOne);
     rand.classList.remove('Available');
     rand.classList.add('Taken');*/
+
   function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
     var rand = null;
       do {
@@ -147,6 +148,7 @@ window.onload = function () {
     }
   }
 
+  //gets neighbors from position
   function getNeigbours(pos) {
     var neighbours = [];
     var maxSteps = 3;
@@ -168,8 +170,11 @@ window.onload = function () {
   var currentPlayer = playerTwo;
   
   //highlight neighbors
-  $(currentPlayer).click(function () {
-    let pos = this.currentBlock.position;
+ //$(currentPlayer).click(function () {
+    //let pos = this.currentBlock.position;
+   
+  function movePlayer(currentPlayer){
+    let pos = currentPlayer.currentBlock.position;
     var neighbours = getNeigbours(pos);
     neighbours.forEach(function (element) {
       element.classList.add('highlight');
@@ -181,32 +186,37 @@ window.onload = function () {
       var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
       neighbours.forEach(function (element) {
         element.classList.remove('highlight');
+
       });
-  
+      
       currentPlayerPosition.remove();
+
       //$('div.myclass').removeClass('highlight');
       appendWeapon(currentPlayer, this);
-
+      switchTurn();
 
       // change player
       // remove event from current
       // add event to new
     });
-  });
-
-  var player_one = 1;
-function display_input(square){ 
-    if ( player_one == 1 ){
-        document.getElementById(square).innerHTML = "X";
-        player_one = 0;
-    } else {
-        document.getElementById(square).innerHTML = "O";    
-        player_one = 1;
-    }   
+ //});
 }
 
 
+function switchTurn(){ 
+    if ( currentPlayer == playerOne ){
+      movePlayer(currentPlayer);
+      $('#dashOne').toggleClass('active');
+      return currentPlayer = playerTwo;
+      
+    } else {
+      movePlayer(currentPlayer);
+      $('#dashTwo').toggleClass('active');
+      return currentPlayer = playerOne;
+    }   
+}
 
+switchTurn();
 
 
 
