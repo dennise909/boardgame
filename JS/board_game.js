@@ -23,27 +23,13 @@ window.onload = function () {
     breaker.className = 'clear';
   }
 
-  //getPathFindingMap()
-  //{
-  // goes through map and check classes. if no wrong classes = 0, if not 1
-  // return map;
-  //}
-
   //Applying images to create weapons and players
-  var divs = document.querySelectorAll(".myclass");
-  weaponOne = createWeapons('horse', 'Imgs/horse.png');
+  var weaponOne = createWeapons('horse', 'Imgs/horse.png');
   weaponTwo = createWeapons('pig', 'Imgs/pig.png');
   weaponTree = createWeapons('dog', 'Imgs/dog.png');
   weaponFour = createWeapons('penguin', 'Imgs/penguin.png');
   playerOne = createWeapons('zombie', 'Imgs/zombie.png');
   playerTwo = createWeapons('adventurer', 'Imgs/adventurer_jump.png');
-  rand = randomNum();
-
-
-  function randomNum() {
-    var random = Math.floor(Math.random() * divs.length);
-    return divs[random];
-  }
 
   function createWeapons(nameAnimal1, sourcePath) {
     var nameAnimal = document.createElement('img');
@@ -52,11 +38,11 @@ window.onload = function () {
     return nameAnimal
   }
 
-  function appendWeapon(nameWeapon, element) {
-    element.appendChild(nameWeapon);
+  function appendItem(nameItem, element) {
+    element.appendChild(nameItem);
     element.classList.remove('Available');
     element.classList.add('Taken');
-    nameWeapon.currentBlock = element;
+    nameItem.currentBlock = element;
   }
 
   function Addweapon(weapon) {
@@ -70,42 +56,28 @@ window.onload = function () {
     rand.classList.add('Taken');
   }
 
-  function Addweapon2(weapon) {
-    var rand = randomNum();
-    do {
-      rand.appendChild(weapon);
-      rand.classList.remove('Available');
-      rand.classList.add('Taken');
-    } while (rand.classList.contains('Available') == true);
-  }
-
-
   Addweapon(weaponOne);
   Addweapon(weaponTwo);
   Addweapon(weaponTree);
   Addweapon(weaponFour);
 
   function randomNumAvailable() {
-    $availableCells = $('div.Available');
-    var random = Math.floor(Math.random() * $availableCells.length);
-    return $availableCells[random];
+    availableCells = $('div.Available');
+    var random = Math.floor(Math.random() * availableCells.length);
+    return availableCells[random];
   }
-  /*
-  var rand = randomNumAvailable();
-    rand.appendChild(playerOne);
-    rand.classList.remove('Available');
-    rand.classList.add('Taken');*/
 
+  //gets random position
   function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
     var rand = null;
-      do {
-        var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-        var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-        rand = window.map[x][y];
-      } while (rand.classList.contains('Available') == false);
-      return rand;
+    do {
+      var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+      var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+      rand = window.map[x][y];
+    } while (rand.classList.contains('Available') == false);
+    return rand;
   }
-
+// adds dimmcells 
   for (var f = 0; f < 10; f++) {
     var rand = getRandomBlock();
     rand.classList.add('dimmcell');
@@ -125,29 +97,6 @@ window.onload = function () {
   rand.classList.remove('Available');
   rand.classList.add('Taken');
 
-  var availableCells = $('div.Available');
-  newAvailable = [];
-  for (var h = 0; h < availableCells.length; h++) {
-    por = availableCells[h].position;
-    if (por.x < 10 && por.y < 4) {
-      newAvailable.push(por);
-    }
-  }
-
-  function randomNumSet(number) {
-    var random = Math.floor(Math.random() * number) + 1
-    return random
-  }
-
-  var availableCells = $('div.Available');
-  newAvailable = [];
-  for (var h = 0; h < availableCells.length; h++) {
-    por = availableCells[h].position;
-    if (por.x < 10 && por.y < 4) {
-      newAvailable.push(por);
-    }
-  }
-
   //gets neighbors from position
   function getNeigbours(pos) {
     var neighbours = [];
@@ -157,7 +106,7 @@ window.onload = function () {
         var neighbour = window.map[pos.x + _x][pos.y];
         neighbours.push(neighbour);
       }
-    }   
+    }
     for (var _y = -maxSteps; _y < maxSteps; _y++) {
       if (pos.y + _y >= 0 && pos.y + _y < 10) {
         var neighbour = window.map[pos.x][pos.y + _y];
@@ -167,13 +116,13 @@ window.onload = function () {
     return neighbours;
   }
 
-  var currentPlayer = playerTwo;
-  
+  var currentPlayer = playerOne;
+
   //highlight neighbors
- //$(currentPlayer).click(function () {
-    //let pos = this.currentBlock.position;
-   
-  function movePlayer(currentPlayer){
+  //$(currentPlayer).click(function () {
+  //let pos = this.currentBlock.position;
+
+  function movePlayer(currentPlayer) {
     let pos = currentPlayer.currentBlock.position;
     var neighbours = getNeigbours(pos);
     neighbours.forEach(function (element) {
@@ -188,35 +137,35 @@ window.onload = function () {
         element.classList.remove('highlight');
 
       });
-      
+
       currentPlayerPosition.remove();
 
       //$('div.myclass').removeClass('highlight');
-      appendWeapon(currentPlayer, this);
+      appendItem(currentPlayer, this);
       switchTurn();
 
       // change player
       // remove event from current
       // add event to new
     });
- //});
-}
+    //});
+  }
 
-
-function switchTurn(){ 
-    if ( currentPlayer == playerOne ){
+  // changes turns between players
+  function switchTurn() {
+    if (currentPlayer == playerOne) {
       movePlayer(currentPlayer);
       $('#dashOne').toggleClass('active');
       return currentPlayer = playerTwo;
-      
+
     } else {
       movePlayer(currentPlayer);
       $('#dashTwo').toggleClass('active');
       return currentPlayer = playerOne;
-    }   
-}
+    }
+  }
 
-switchTurn();
+  switchTurn();
 
 
 
