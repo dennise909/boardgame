@@ -77,7 +77,8 @@ window.onload = function () {
     } while (rand.classList.contains('Available') == false);
     return rand;
   }
-// adds dimmcells 
+
+  //adds dimmcells 
   for (var f = 0; f < 10; f++) {
     var rand = getRandomBlock();
     rand.classList.add('dimmcell');
@@ -85,6 +86,7 @@ window.onload = function () {
     rand.classList.add('Taken');
   }
 
+  //places players in random cells 
   var rand = getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 3);
   rand.appendChild(playerOne);
   playerOne.currentBlock = rand;
@@ -101,13 +103,13 @@ window.onload = function () {
   function getNeigbours(pos) {
     var neighbours = [];
     var maxSteps = 3;
-    for (var _x = -maxSteps; _x < maxSteps; _x++) {
+    for (var _x = -maxSteps; _x <= maxSteps; _x++) {
       if (pos.x + _x >= 0 && pos.x + _x < 10) {
         var neighbour = window.map[pos.x + _x][pos.y];
         neighbours.push(neighbour);
       }
     }
-    for (var _y = -maxSteps; _y < maxSteps; _y++) {
+    for (var _y = -maxSteps; _y <= maxSteps; _y++) {
       if (pos.y + _y >= 0 && pos.y + _y < 10) {
         var neighbour = window.map[pos.x][pos.y + _y];
         neighbours.push(neighbour);
@@ -117,10 +119,6 @@ window.onload = function () {
   }
 
   var currentPlayer = playerOne;
-
-  //highlight neighbors
-  //$(currentPlayer).click(function () {
-  //let pos = this.currentBlock.position;
 
   function movePlayer(currentPlayer) {
     let pos = currentPlayer.currentBlock.position;
@@ -135,15 +133,13 @@ window.onload = function () {
       var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
       neighbours.forEach(function (element) {
         element.classList.remove('highlight');
-
+        element.classList.remove('Taken');
+        element.classList.add('Available');
       });
-
       currentPlayerPosition.remove();
-
       //$('div.myclass').removeClass('highlight');
       appendItem(currentPlayer, this);
       switchTurn();
-
       // change player
       // remove event from current
       // add event to new
