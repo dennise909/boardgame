@@ -151,12 +151,14 @@ window.onload = function () {
   function switchTurn() {
     if (currentPlayer == playerOne) {
       movePlayer(currentPlayer);
-      $('#dashOne').toggleClass('active');
+      $('#dashTwo').removeClass('active');
+      $('#dashOne').addClass('active');
       return currentPlayer = playerTwo;
 
     } else {
+      $('#dashOne').removeClass('active');
       movePlayer(currentPlayer);
-      $('#dashTwo').toggleClass('active');
+      $('#dashTwo').addClass('active');
       return currentPlayer = playerOne;
     }
   }
