@@ -133,6 +133,7 @@ window.onload = function () {
       var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
       neighbours.forEach(function (element) {
         element.classList.remove('highlight');
+        if (element.classList.contains('dimmcell') != true);
         element.classList.remove('Taken');
         element.classList.add('Available');
       });
@@ -164,6 +165,31 @@ window.onload = function () {
   }
 
   switchTurn();
+// Classes for player and weapon
+
+class User {
+  constructor(name,health) {
+    this.name = name;
+    this.health = health;
+  }
+}
+
+class Weapon {
+  constructor(type,damage) {
+    this.type = type;
+    this.damage = damage;
+  }
+}
+
+user1 = new User ("zombie", 100);
+
+
+
+
+
+
+
+
 
 
 
