@@ -184,6 +184,48 @@ class Weapon {
 user1 = new User ("zombie", 100);
 
 
+// Classes for player and weapon
+
+/* 
+class User {
+  constructor(name,health) {
+    this.name = name;
+    this.health = health;
+  }
+}
+
+class Weapon {
+  constructor(type,damage,nameWeapon) {
+    this.type = type;
+    this.damage = damage;
+    this.sprite = Addweapon(nameWeapon);
+  }
+}
+
+user1 = new User ("zombie", 100,);
+user2 = new User ("adventurer",100);
+weapon1 = new Weapon ("pig",50,weaponOne);
+weapon2 = new Weapon ("horse",30,weaponTwo);
+weapon3 = new Weapon ("penguin",10,weaponTree);
+weapon4 = new Weapon ("dog",5,weaponFour);
+
+// Fighting mode 
+
+//Creates new window for the fight
+function fightWindow() {
+  var myWindow = window.open("", "MsgWindow", "width=200,height=100");
+  myWindow.document.write("We will fight here");
+}
+
+
+function fightModeOn(){
+  neighbours.forEach(function (element) {
+    if (element.classList.contains('adventurer') == true) {
+      fightWindow();
+    }
+  });
+}
+*/
 
 
 
