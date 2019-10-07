@@ -26,7 +26,7 @@ window.onload = function () {
   //Applying images to create weapons and players
   var weaponOne = createWeapons('horse', 'Imgs/horse.png');
   weaponTwo = createWeapons('pig', 'Imgs/pig.png');
-  weaponTree = createWeapons('dog', 'Imgs/dog.png');
+  weaponThree = createWeapons('dog', 'Imgs/dog.png');
   weaponFour = createWeapons('penguin', 'Imgs/penguin.png');
   playerOne = createWeapons('zombie', 'Imgs/zombie.png');
   playerTwo = createWeapons('adventurer', 'Imgs/adventurer_jump.png');
@@ -45,27 +45,35 @@ window.onload = function () {
     nameItem.currentBlock = element;
   }
 
-  function Addweapon(weapon) {
+  function addWeapon(weapon) {
     var rand = getRandomBlock();
     rand.appendChild(weapon);
     rand.classList.remove('Available');
     rand.classList.add('Taken');
-    var rand = randomNumAvailable();
-    rand.appendChild(weapon);
-    rand.classList.remove('Available');
-    rand.classList.add('Taken');
   }
 
-  Addweapon(weaponOne);
-  Addweapon(weaponTwo);
-  Addweapon(weaponTree);
-  Addweapon(weaponFour);
-
-  function randomNumAvailable() {
-    availableCells = $('div.Available');
-    var random = Math.floor(Math.random() * availableCells.length);
-    return availableCells[random];
+  // Classes for player and weapon
+  class User {
+    constructor(name, health) {
+      this.name = name;
+      this.health = health;
+    }
   }
+
+  class Weapon {
+    constructor(type, damage, nameWeapon) {
+      this.type = type;
+      this.damage = damage;
+      this.sprite = addWeapon(nameWeapon);
+    }
+  }
+
+  user1 = new User("zombie", 100);
+  user2 = new User("adventurer", 100);
+  weapon1 = new Weapon("pig", 50, weaponOne);
+  weapon2 = new Weapon("horse", 30, weaponTwo);
+  weapon3 = new Weapon("penguin", 10, weaponThree);
+  weapon4 = new Weapon("dog", 5, weaponFour);
 
   //gets random position
   function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
@@ -87,17 +95,16 @@ window.onload = function () {
   }
 
   //places players in random cells 
-  var rand = getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 3);
-  rand.appendChild(playerOne);
-  playerOne.currentBlock = rand;
+  function placePlayers(player,minx,maxx,miny,maxy){
+  var rand = getRandomBlock(minX = minx, maxX = maxx, minY = miny, maxY = maxy);
+  rand.appendChild(player);
+  player.currentBlock = rand;
   rand.classList.remove('Available');
   rand.classList.add('Taken');
+  }
 
-  var rand = getRandomBlock(minX = 0, maxX = 9, minY = 6, maxY = 9);
-  rand.appendChild(playerTwo);
-  playerTwo.currentBlock = rand;
-  rand.classList.remove('Available');
-  rand.classList.add('Taken');
+  placePlayers(playerOne,0,9,0,3);
+  placePlayers(playerTwo,0,9,6,9);
 
   //gets neighbors from position
   function getNeigbours(pos) {
@@ -118,6 +125,22 @@ window.onload = function () {
     return neighbours;
   }
 
+  // Fighting mode 
+  //Creates new window for the fight
+  function fightWindow() {
+    var myWindow = window.open("", "MsgWindow", "width=200,height=100");
+    myWindow.document.write("We will fight here");
+  }
+
+
+  function fightModeOn() {
+    neighbours.forEach(function () {
+      if (this.classList.contains('adventurer') == true) {
+        fightWindow();
+      }
+    });
+  }
+
   var currentPlayer = playerOne;
 
   function movePlayer(currentPlayer) {
@@ -133,12 +156,12 @@ window.onload = function () {
       var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
       neighbours.forEach(function (element) {
         element.classList.remove('highlight');
-        if (element.classList.contains('dimmcell') != true);
-        element.classList.remove('Taken');
-        element.classList.add('Available');
+        if (element.classList.contains('dimmcell') != true){
+          element.classList.remove('Taken');
+          element.classList.add('Available');
+        };
       });
       currentPlayerPosition.remove();
-      //$('div.myclass').removeClass('highlight');
       appendItem(currentPlayer, this);
       switchTurn();
       // change player
@@ -147,7 +170,6 @@ window.onload = function () {
     });
     //});
   }
-
   // changes turns between players
   function switchTurn() {
     if (currentPlayer == playerOne) {
@@ -165,68 +187,9 @@ window.onload = function () {
   }
 
   switchTurn();
-// Classes for player and weapon
-
-class User {
-  constructor(name,health) {
-    this.name = name;
-    this.health = health;
-  }
-}
-
-class Weapon {
-  constructor(type,damage) {
-    this.type = type;
-    this.damage = damage;
-  }
-}
-
-user1 = new User ("zombie", 100);
 
 
-// Classes for player and weapon
-
-/* 
-class User {
-  constructor(name,health) {
-    this.name = name;
-    this.health = health;
-  }
-}
-
-class Weapon {
-  constructor(type,damage,nameWeapon) {
-    this.type = type;
-    this.damage = damage;
-    this.sprite = Addweapon(nameWeapon);
-  }
-}
-
-user1 = new User ("zombie", 100,);
-user2 = new User ("adventurer",100);
-weapon1 = new Weapon ("pig",50,weaponOne);
-weapon2 = new Weapon ("horse",30,weaponTwo);
-weapon3 = new Weapon ("penguin",10,weaponTree);
-weapon4 = new Weapon ("dog",5,weaponFour);
-
-// Fighting mode 
-
-//Creates new window for the fight
-function fightWindow() {
-  var myWindow = window.open("", "MsgWindow", "width=200,height=100");
-  myWindow.document.write("We will fight here");
-}
-
-
-function fightModeOn(){
-  neighbours.forEach(function (element) {
-    if (element.classList.contains('adventurer') == true) {
-      fightWindow();
-    }
-  });
-}
-*/
-
+  
 
 
 
