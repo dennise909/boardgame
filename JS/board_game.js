@@ -31,6 +31,7 @@ window.onload = function () {
   playerOne = createWeapons('zombie', 'Imgs/zombie.png');
   playerTwo = createWeapons('adventurer', 'Imgs/adventurer_jump.png');
 
+  //creates sprites as img 
   function createWeapons(nameAnimal1, sourcePath) {
     var nameAnimal = document.createElement('img');
     nameAnimal.setAttribute('src', sourcePath);
@@ -38,13 +39,16 @@ window.onload = function () {
     return nameAnimal
   }
 
+    //gets position of the player
   function appendItem(nameItem, element) {
     element.appendChild(nameItem);
     element.classList.remove('Available');
     element.classList.add('Taken');
+    element.classList.add('Player');
     nameItem.currentBlock = element;
   }
 
+  //adds weapons randomly
   function addWeapon(weapon) {
     var rand = getRandomBlock();
     rand.appendChild(weapon);
@@ -75,7 +79,7 @@ window.onload = function () {
   weapon3 = new Weapon("penguin", 10, weaponThree);
   weapon4 = new Weapon("dog", 5, weaponFour);
 
-  //gets random position
+  //gets random block on the grid
   function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
     var rand = null;
     do {
@@ -86,7 +90,7 @@ window.onload = function () {
     return rand;
   }
 
-  //adds dimmcells 
+  //adds 10 dimmcells over the grid 
   for (var f = 0; f < 10; f++) {
     var rand = getRandomBlock();
     rand.classList.add('dimmcell');
@@ -101,6 +105,7 @@ window.onload = function () {
   player.currentBlock = rand;
   rand.classList.remove('Available');
   rand.classList.add('Taken');
+  rand.classList.add("Player");
   }
 
   placePlayers(playerOne,0,9,0,3);
@@ -134,9 +139,13 @@ window.onload = function () {
 
 
   function fightModeOn() {
-    neighbours.forEach(function () {
-      if (this.classList.contains('adventurer') == true) {
-        fightWindow();
+    neighbours.forEach(function (element) {
+      var players = [];
+      if (element.classList.contains('Player') == true) {
+        players.push(this);
+        if (players.length >= 2){
+          fightWindow();
+        }
       }
     });
   }
@@ -149,6 +158,10 @@ window.onload = function () {
     neighbours.forEach(function (element) {
       element.classList.add('highlight');
     });
+    players = $('div.Taken.highlight.Player').length;
+    if (players >= 2){
+      fightWindow();
+    }
     // move player to highlight cell
     $('div.Available.highlight').click(function onHighlightClick() {
       $('div.Available.highlight').off('click');
@@ -158,6 +171,7 @@ window.onload = function () {
         element.classList.remove('highlight');
         if (element.classList.contains('dimmcell') != true){
           element.classList.remove('Taken');
+          element.classList.remove('Player');
           element.classList.add('Available');
         };
       });
