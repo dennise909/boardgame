@@ -36,8 +36,23 @@ window.onload = function () {
     var nameAnimal = document.createElement('img');
     nameAnimal.setAttribute('src', sourcePath);
     nameAnimal.setAttribute('name', nameAnimal1);
+    
     return nameAnimal
   }
+
+  function placeWeapon(weapon, element) {
+    var weaponSprite = element.createElement('img');
+    weaponSprite.setAttribute('src', weapon.sprite);
+    //weapon.sprite should be just a path to the sprite png
+
+    element.weapon = weapon;
+
+    //when player is taking the weapon:
+    //-remove img
+    //-remove reference to weapon object
+    //-add weapon object to player inventory
+  }
+
 
     //gets position of the player
   function appendItem(nameItem, element) {
@@ -61,6 +76,10 @@ window.onload = function () {
     constructor(name, health) {
       this.name = name;
       this.health = health;
+      //inventory here
+    }
+    addWeapon(weapon) {
+
     }
   }
 
@@ -111,25 +130,69 @@ window.onload = function () {
   placePlayers(playerOne,0,9,0,3);
   placePlayers(playerTwo,0,9,6,9);
 
+
+  function rayCheck(pos, stepX, stepY, steps) {
+    for (var step = 1; step <= steps; step++) {
+      var newX = pos.x + step * stepX;
+      var newY = pos.y + step * stepY;
+      var neighbour = window.map[pos.x + newX][pos.y];
+    
+    }
+    console.log(newX,newY);
+    //return list with neighbours 
+  }
+  
   //gets neighbors from position
   function getNeigbours(pos) {
-    var neighbours = [];
+      var neighbours = [];
+    //var _neighbours = rayCheck(pos, 1, 0, maxSteps) // right
+    //_neihbours.forEach(n => {
+    //  neighbours.push(n)
+    //});
+
+    // join results from all 4 rays and that's all
     var maxSteps = 3;
-    for (var _x = -maxSteps; _x <= maxSteps; _x++) {
+
+    for (var _x = 1; _x <= maxSteps; _x++) {
+      var newX = pos.x + _x;
+      var newY = pos.y + 0; 
+      if (newX >= 0 && newX < 10) {
+        var neighbour = window.map[newX][newY];
+        if (neighbour.classList.contains('Available')) {
+          neighbours.push(neighbour);
+        } else {
+          break;
+        }
+      }
+    }
+
+    for (var _x = -1; _x >= -maxSteps; _x--) {
+      var newX = pos.x + _x;
+      var newY = pos.y + 0; 
+      if (newX >= 0 && newX < 10) {
+        var neighbour = window.map[newX][newY];
+        if (neighbour.classList.contains('Available')) {
+          neighbours.push(neighbour);
+        } else {
+          break;
+        }
+      }
+    }
+
+    /*
+    var maxSteps = 3;
+    for (var _x = 0; _x <= maxSteps; _x++) {
       if (pos.x + _x >= 0 && pos.x + _x < 10) {
         var neighbour = window.map[pos.x + _x][pos.y];
         neighbours.push(neighbour);
       }
-    }
-    for (var _y = -maxSteps; _y <= maxSteps; _y++) {
-      if (pos.y + _y >= 0 && pos.y + _y < 10) {
-        var neighbour = window.map[pos.x][pos.y + _y];
-        neighbours.push(neighbour);
-      }
-    }
+    }*/
+    
+    
     return neighbours;
   }
 
+  
   // Fighting mode 
   //Creates new window for the fight
   function fightWindow() {
@@ -204,9 +267,6 @@ window.onload = function () {
 
 
   
-
-
-
 
 
 
