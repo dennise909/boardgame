@@ -158,6 +158,7 @@ window.onload = function () {
     neighbours.forEach(function (element) {
       element.classList.add('highlight');
     });
+    //checks if more than 2 players on neighbours to start fight
     players = $('div.Taken.highlight.Player').length;
     if (players >= 2){
       fightWindow();
