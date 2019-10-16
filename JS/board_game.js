@@ -24,10 +24,6 @@ window.onload = function () {
   }
 
   //Applying images to create weapons and players
-  var weaponOne = createWeapons('horse', 'Imgs/horse.png');
-  weaponTwo = createWeapons('pig', 'Imgs/pig.png');
-  weaponThree = createWeapons('dog', 'Imgs/dog.png');
-  weaponFour = createWeapons('penguin', 'Imgs/penguin.png');
   playerOne = createWeapons('zombie', 'Imgs/zombie.png');
   playerTwo = createWeapons('adventurer', 'Imgs/adventurer_jump.png');
 
@@ -36,16 +32,16 @@ window.onload = function () {
     var nameAnimal = document.createElement('img');
     nameAnimal.setAttribute('src', sourcePath);
     nameAnimal.setAttribute('name', nameAnimal1);
-    
     return nameAnimal
   }
 
-  function placeWeapon(weapon, element) {
-    var weaponSprite = element.createElement('img');
+  function placeWeapon(weapon) {
+    var weaponSprite = document.createElement('img');
     weaponSprite.setAttribute('src', weapon.sprite);
+    return weaponSprite
     //weapon.sprite should be just a path to the sprite png
 
-    element.weapon = weapon;
+    //element.weapon = weapon;
 
     //when player is taking the weapon:
     //-remove img
@@ -66,37 +62,13 @@ window.onload = function () {
   //adds weapons randomly
   function addWeapon(weapon) {
     var rand = getRandomBlock();
+    weapon.currentBlock = rand;
     rand.appendChild(weapon);
-    rand.classList.remove('Available');
-    rand.classList.add('Taken');
+    //rand.classList.remove('Available');
+    //rand.classList.add('Taken');
+    rand.classList.add('Weapon');
+    return weapon.currentBlock
   }
-
-  // Classes for player and weapon
-  class User {
-    constructor(name, health) {
-      this.name = name;
-      this.health = health;
-      //inventory here
-    }
-    addWeapon(weapon) {
-
-    }
-  }
-
-  class Weapon {
-    constructor(type, damage, nameWeapon) {
-      this.type = type;
-      this.damage = damage;
-      this.sprite = addWeapon(nameWeapon);
-    }
-  }
-
-  user1 = new User("zombie", 100);
-  user2 = new User("adventurer", 100);
-  weapon1 = new Weapon("pig", 50, weaponOne);
-  weapon2 = new Weapon("horse", 30, weaponTwo);
-  weapon3 = new Weapon("penguin", 10, weaponThree);
-  weapon4 = new Weapon("dog", 5, weaponFour);
 
   //gets random block on the grid
   function getRandomBlock(minX = 0, maxX = 9, minY = 0, maxY = 9) {
@@ -109,16 +81,8 @@ window.onload = function () {
     return rand;
   }
 
-  //adds 10 dimmcells over the grid 
-  for (var f = 0; f < 10; f++) {
-    var rand = getRandomBlock();
-    rand.classList.add('dimmcell');
-    rand.classList.remove('Available');
-    rand.classList.add('Taken');
-  }
-
-  //places players in random cells 
-  function placePlayers(player,minx,maxx,miny,maxy){
+ //places players in random cells 
+  function placePlayer(player,minx,maxx,miny,maxy){
   var rand = getRandomBlock(minX = minx, maxX = maxx, minY = miny, maxY = maxy);
   rand.appendChild(player);
   player.currentBlock = rand;
@@ -127,112 +91,155 @@ window.onload = function () {
   rand.classList.add("Player");
   }
 
-  placePlayers(playerOne,0,9,0,3);
-  placePlayers(playerTwo,0,9,6,9);
+  // Classes for player and weapon
+  class User {
+    constructor(name, health,path,weapon) {
+      this.name = name;
+      this.health = health;
+      this.sprite = path;
+      this.image = placeWeapon(this);
+      this.inventory = weapon;
+    }
+  }
+
+  class Weapon {
+    constructor(type, damage,path) {
+      this.type = type;
+      this.damage = damage;
+      this.sprite = path;
+    }
+}
+// Creating classes of players
+  startweapon = new Weapon ("default", 4, null);
+  user1 = new User("Zombie", 100,'Imgs/zombie.png',startweapon);
+  document.getElementById("nameplayerone").innerHTML = user1.name;
+  document.getElementById("healthplayerone").innerHTML = user1.health;
+  user2 = new User("Adventurer", 100,'Imgs/adventurer_jump.png',startweapon);
+  document.getElementById("nameplayertwo").innerHTML = user2.name;
+  document.getElementById("healthplayertwo").innerHTML = user2.health;
+  weapon1 = new Weapon("pig", 50,'Imgs/pig.png');
+  weapon2 = new Weapon("horse", 30,'Imgs/horse.png');
+  weapon3 = new Weapon("penguin", 10, 'Imgs/penguin.png');
+  weapon4 = new Weapon("dog", 5,'Imgs/dog.png');
+
+  //adds 10 dimmcells over the grid 
+  for (var f = 0; f < 10; f++) {
+    var rand = getRandomBlock();
+    rand.classList.add('dimmcell');
+    rand.classList.remove('Available');
+    rand.classList.add('Taken');
+  }
+
+  //places weapons and player
+
+  function createsImgPosition (weapon){
+    weapon.image = placeWeapon(weapon);
+    weapon.currentBlock = addWeapon(weapon.image);
+  }
+
+  createsImgPosition(weapon1);
+  createsImgPosition(weapon2);
+  createsImgPosition(weapon3);
+  createsImgPosition(weapon4);
+  
+  placePlayer(user1.image,0,9,0,3);
+  placePlayer(user2.image,0,9,6,9);
 
 
   function rayCheck(pos, stepX, stepY, steps) {
+    var _neighbours = [];
     for (var step = 1; step <= steps; step++) {
       var newX = pos.x + step * stepX;
       var newY = pos.y + step * stepY;
-      var neighbour = window.map[pos.x + newX][pos.y];
-    
-    }
-    console.log(newX,newY);
-    //return list with neighbours 
+      if ((newX >= 0 && newX < 10) && (newY >= 0 && newY < 10)){
+        var neighbour = window.map[newX][newY];
+        if (neighbour.classList.contains('dimmcell') == false) {
+        _neighbours.push(neighbour);
+      }else {
+        break;
+      }    
+    }}
+   return _neighbours;
   }
   
-  //gets neighbors from position
+  //gets neighbors from position and highlights
   function getNeigbours(pos) {
       var neighbours = [];
-    //var _neighbours = rayCheck(pos, 1, 0, maxSteps) // right
-    //_neihbours.forEach(n => {
-    //  neighbours.push(n)
-    //});
-
-    // join results from all 4 rays and that's all
-    var maxSteps = 3;
-
-    for (var _x = 1; _x <= maxSteps; _x++) {
-      var newX = pos.x + _x;
-      var newY = pos.y + 0; 
-      if (newX >= 0 && newX < 10) {
-        var neighbour = window.map[newX][newY];
-        if (neighbour.classList.contains('Available')) {
-          neighbours.push(neighbour);
-        } else {
-          break;
-        }
-      }
-    }
-
-    for (var _x = -1; _x >= -maxSteps; _x--) {
-      var newX = pos.x + _x;
-      var newY = pos.y + 0; 
-      if (newX >= 0 && newX < 10) {
-        var neighbour = window.map[newX][newY];
-        if (neighbour.classList.contains('Available')) {
-          neighbours.push(neighbour);
-        } else {
-          break;
-        }
-      }
-    }
-
-    /*
-    var maxSteps = 3;
-    for (var _x = 0; _x <= maxSteps; _x++) {
-      if (pos.x + _x >= 0 && pos.x + _x < 10) {
-        var neighbour = window.map[pos.x + _x][pos.y];
-        neighbours.push(neighbour);
-      }
-    }*/
-    
-    
+      var maxSteps = 3;
+      // join results from all 4 rays and that's all
+         neighbours1 = rayCheck(pos, 1, 0, maxSteps); // right
+         neighbours2 = rayCheck(pos, -1, 0, maxSteps);
+         neighbours3 = rayCheck(pos, 0, 1, maxSteps);
+         neighbours4 = rayCheck(pos, 0, -1, maxSteps);
+        neighbours1.forEach(n => {
+        neighbours.push(n)});
+        neighbours2.forEach(n => {
+        neighbours.push(n)});
+        neighbours3.forEach(n => {
+        neighbours.push(n)});
+        neighbours4.forEach(n => {
+        neighbours.push(n)}); 
+        neighbours.forEach(function (element) {
+        element.classList.add('highlight');
+        });  
     return neighbours;
   }
 
-  
   // Fighting mode 
   //Creates new window for the fight
+
+  function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+      this.sound.play();
+    }
+    this.stop = function(){
+      this.sound.pause();
+    }
+  }
+
   function fightWindow() {
     var myWindow = window.open("", "MsgWindow", "width=200,height=100");
     myWindow.document.write("We will fight here");
+    newSound = new sound('Sound/battle.mp3')
+    newSound.play();
+    //window.onbeforeunload = newSound.stop();
   }
 
 
   function fightModeOn() {
-    neighbours.forEach(function (element) {
-      var players = [];
-      if (element.classList.contains('Player') == true) {
-        players.push(this);
-        if (players.length >= 2){
+      var players = $('div.Taken.highlight.Player').length;
+      if (players >= 2) {
           fightWindow();
         }
       }
-    });
-  }
 
-  var currentPlayer = playerOne;
+  var currentPlayer = user1.image;
 
   function movePlayer(currentPlayer) {
     let pos = currentPlayer.currentBlock.position;
-    var neighbours = getNeigbours(pos);
-    neighbours.forEach(function (element) {
-      element.classList.add('highlight');
-    });
+        neighbours = getNeigbours(pos);
     //checks if more than 2 players on neighbours to start fight
-    players = $('div.Taken.highlight.Player').length;
-    if (players >= 2){
-      fightWindow();
-    }
+    fightModeOn();
     // move player to highlight cell
-    $('div.Available.highlight').click(function onHighlightClick() {
+    $('div.Available.highlight').click(function onHighlightClick(element) {
       $('div.Available.highlight').off('click');
+      //if (element.classList.contains('Weapon') == true ){
+        //currentPlayer.inventory = weapon1;
+      //}
       var currentPlayerPosition = $(currentPlayer)[0];
       var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
-      neighbours.forEach(function (element) {
+          neighbours.forEach(function (element) {
+        
         element.classList.remove('highlight');
+        if (element.classList.contains('Weapon') == true ){
+          currentPlayer.inventory = weapon1;
+        }
         if (element.classList.contains('dimmcell') != true){
           element.classList.remove('Taken');
           element.classList.remove('Player');
@@ -250,17 +257,17 @@ window.onload = function () {
   }
   // changes turns between players
   function switchTurn() {
-    if (currentPlayer == playerOne) {
+    if (currentPlayer == user1.image) {
       movePlayer(currentPlayer);
       $('#dashTwo').removeClass('active');
       $('#dashOne').addClass('active');
-      return currentPlayer = playerTwo;
+      return currentPlayer = user2.image;
 
     } else {
       $('#dashOne').removeClass('active');
       movePlayer(currentPlayer);
       $('#dashTwo').addClass('active');
-      return currentPlayer = playerOne;
+      return currentPlayer = user1.image;
     }
   }
 
