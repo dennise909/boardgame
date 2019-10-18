@@ -221,6 +221,7 @@ window.onload = function () {
     div2.style.background = "red";
     div2.style.left = "40%";
     div2.style.zIndex = "100";
+   
     document.getElementById("main").appendChild(div);
     document.getElementById("main").appendChild(div2);
     newSound = new sound('Sound/battle.mp3')
