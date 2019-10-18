@@ -204,8 +204,25 @@ window.onload = function () {
   }
 
   function fightWindow() {
-    var myWindow = window.open("", "MsgWindow", "width=200,height=100");
-    myWindow.document.write("We will fight here");
+    var div = document.createElement('div');
+    div.style.width = "100%";
+    div.style.height = "100%";
+    div.style.background = "black";
+    div.style.opacity = "0.6";
+    div.style.position = "fixed";
+    div.style.zIndex = "10";
+
+
+    var div2 = document.createElement('div');
+    div2.style.width = "400px";
+    div2.style.height = "400px";
+    div2.style.position = "fixed";
+    div2.style.top = "40%";
+    div2.style.background = "red";
+    div2.style.left = "40%";
+    div2.style.zIndex = "100";
+    document.getElementById("main").appendChild(div);
+    document.getElementById("main").appendChild(div2);
     newSound = new sound('Sound/battle.mp3')
     newSound.play();
     //window.onbeforeunload = newSound.stop();
