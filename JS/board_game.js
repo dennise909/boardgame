@@ -107,10 +107,10 @@ window.onload = function () {
   user2 = new User("Adventurer", 100,'Imgs/adventurer_jump.png',startweapon1);
   document.getElementById("nameplayertwo").innerHTML = user2.type;
   document.getElementById("healthplayertwo").innerHTML = user2.health;
-  weapon1 = new Weapon("pig", 50,'Imgs/pig.png');
-  weapon2 = new Weapon("horse", 30,'Imgs/horse.png');
-  weapon3 = new Weapon("penguin", 10, 'Imgs/penguin.png');
-  weapon4 = new Weapon("dog", 5,'Imgs/dog.png');
+  weapon1 = new Weapon("Pig", 50,'Imgs/pig.png');
+  weapon2 = new Weapon("Horse", 30,'Imgs/horse.png');
+  weapon3 = new Weapon("Penguin", 10, 'Imgs/penguin.png');
+  weapon4 = new Weapon("Dog", 5,'Imgs/dog.png');
 
   //adds 10 dimmcells over the grid 
   for (var f = 0; f < 10; f++) {
@@ -213,14 +213,15 @@ window.onload = function () {
     modalContent.style.height = "400px";
     modalContent.style.position = "fixed";
     modalContent.style.top = "40%";
-    modalContent.style.background = "red";
+    modalContent.style.bottom = "40%";
+    modalContent.style.background = "#F1CAD8";
     modalContent.style.left = "40%";
     modalContent.style.zIndex = "100";
    
     document.getElementById("main").appendChild(modal);
     document.getElementById("main").appendChild(modalContent);
     newSound = new sound('Sound/battle.mp3')
-    newSound.play();
+    //newSound.play();
   }
 
 
@@ -234,13 +235,13 @@ window.onload = function () {
   //
   function checksWeapon(position,player){
     if (position.classList.contains('Weapon') === true ) {
-       if ($(position).children('img').attr('name')== "pig"){
+       if ($(position).children('img').attr('name')== "Pig"){
         player.inventory = weapon1;
       $('img[src*="Imgs/pig.png"]').remove();
-      } else if ($(position).children('img').attr('name')== "horse"){
+      } else if ($(position).children('img').attr('name')== "Horse"){
         player.inventory = weapon2;
       $('img[src*="Imgs/horse.png"]').remove();
-      } else if ($(position).children('img').attr('name')== "penguin"){
+      } else if ($(position).children('img').attr('name')== "Penguin"){
         player.inventory = weapon3;
       $('img[src*="Imgs/penguin.png"]').remove();
       }else {
@@ -275,8 +276,8 @@ window.onload = function () {
       //console.log($(this).children('img').attr('name'));
       appendItem(currentPlayer, this);
       //checksWeapon(this);
-      $("#weaponplayerone").innerHTML = user1.inventory.type;
-      $("#weaponplayerone").innerHTML = user1.inventory.type;
+      $("#weaponplayerone").html(user1.inventory.type);
+      $("#weaponplayertwo").html(user2.inventory.type);
       //document.getElementById("weaponplayertwo").innerHTML = user2.inventory.type;
       switchTurn();
       // change player
@@ -290,7 +291,6 @@ window.onload = function () {
   function switchTurn() {
     if (currentPlayer == user1) {
       movePlayer(currentPlayer);
-      document.getElementById("weaponplayerone").innerHTML = user1.inventory.type;
       $('#dashTwo').removeClass('active');
       $('#dashOne').addClass('active');
       
@@ -299,9 +299,7 @@ window.onload = function () {
     } else {
       $('#dashOne').removeClass('active');
       movePlayer(currentPlayer);
-      document.getElementById("weaponplayertwo").innerHTML = user2.inventory.type;
       $('#dashTwo').addClass('active');
-      
       return currentPlayer = user1;
     }
   }
