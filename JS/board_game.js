@@ -23,22 +23,13 @@ window.onload = function () {
     breaker.className = 'clear';
   }
 
-  //Applying images to create weapons and players
-  playerOne = createWeapons('zombie', 'Imgs/zombie.png');
-  playerTwo = createWeapons('adventurer', 'Imgs/adventurer_jump.png');
 
   //creates sprites as img 
-  function createWeapons(nameAnimal1, sourcePath) {
-    var nameAnimal = document.createElement('img');
-    nameAnimal.setAttribute('src', sourcePath);
-    nameAnimal.setAttribute('name', nameAnimal1);
-    return nameAnimal
-  }
-
-  function placeWeapon(weapon) {
-    var weaponSprite = document.createElement('img');
-    weaponSprite.setAttribute('src', weapon.sprite);
-    return weaponSprite
+  function placeItem(item) {
+    var itemSprite = document.createElement('img');
+    itemSprite.setAttribute('src', item.sprite);
+    itemSprite.setAttribute('name', item.type);
+    return itemSprite
     //weapon.sprite should be just a path to the sprite png
 
     //element.weapon = weapon;
@@ -50,24 +41,13 @@ window.onload = function () {
   }
 
 
-    //gets position of the player
+    //adds player to new position
   function appendItem(nameItem, element) {
-    element.appendChild(nameItem);
+    element.appendChild(nameItem.image);
     element.classList.remove('Available');
     element.classList.add('Taken');
     element.classList.add('Player');
     nameItem.currentBlock = element;
-  }
-
-  //adds weapons randomly
-  function addWeapon(weapon) {
-    var rand = getRandomBlock();
-    weapon.currentBlock = rand;
-    rand.appendChild(weapon);
-    //rand.classList.remove('Available');
-    //rand.classList.add('Taken');
-    rand.classList.add('Weapon');
-    return weapon.currentBlock
   }
 
   //gets random block on the grid
@@ -80,24 +60,33 @@ window.onload = function () {
     } while (rand.classList.contains('Available') == false);
     return rand;
   }
-
+  //adds weapons randomly
+  function addWeapon(weapon) {
+    var rand = getRandomBlock();
+    weapon.currentBlock = rand;
+    rand.appendChild(weapon);
+    //rand.classList.remove('Available');
+    //rand.classList.add('Taken');
+    rand.classList.add('Weapon');
+    return weapon.currentBlock;
+  }
  //places players in random cells 
-  function placePlayer(player,minx,maxx,miny,maxy){
-  var rand = getRandomBlock(minX = minx, maxX = maxx, minY = miny, maxY = maxy);
+  function placePlayer(player,miny,maxy){
+  var rand = getRandomBlock(minX = 0, maxX = 9, minY = miny, maxY = maxy);
   rand.appendChild(player);
   player.currentBlock = rand;
   rand.classList.remove('Available');
   rand.classList.add('Taken');
   rand.classList.add("Player");
+  return player.currentBlock;
   }
 
   // Classes for player and weapon
   class User {
     constructor(name, health,path,weapon) {
-      this.name = name;
+      this.type = name;
       this.health = health;
       this.sprite = path;
-      this.image = placeWeapon(this);
       this.inventory = weapon;
     }
   }
@@ -110,12 +99,13 @@ window.onload = function () {
     }
 }
 // Creating classes of players
-  startweapon = new Weapon ("default", 4, null);
+  startweapon = new Weapon ("Default", 4, null);
+  startweapon1 = new Weapon ("Default", 4, null);
   user1 = new User("Zombie", 100,'Imgs/zombie.png',startweapon);
-  document.getElementById("nameplayerone").innerHTML = user1.name;
+  document.getElementById("nameplayerone").innerHTML = user1.type;
   document.getElementById("healthplayerone").innerHTML = user1.health;
-  user2 = new User("Adventurer", 100,'Imgs/adventurer_jump.png',startweapon);
-  document.getElementById("nameplayertwo").innerHTML = user2.name;
+  user2 = new User("Adventurer", 100,'Imgs/adventurer_jump.png',startweapon1);
+  document.getElementById("nameplayertwo").innerHTML = user2.type;
   document.getElementById("healthplayertwo").innerHTML = user2.health;
   weapon1 = new Weapon("pig", 50,'Imgs/pig.png');
   weapon2 = new Weapon("horse", 30,'Imgs/horse.png');
@@ -131,19 +121,23 @@ window.onload = function () {
   }
 
   //places weapons and player
-
-  function createsImgPosition (weapon){
-    weapon.image = placeWeapon(weapon);
-    weapon.currentBlock = addWeapon(weapon.image);
+  function createsImgPositionWeapon (item){
+    item.image = placeItem(item);
+    item.currentBlock = addWeapon(item.image);
   }
 
-  createsImgPosition(weapon1);
-  createsImgPosition(weapon2);
-  createsImgPosition(weapon3);
-  createsImgPosition(weapon4);
+  function createsImgPositionPlayer (item,miny,maxy){
+    item.image = placeItem(item);
+    item.currentBlock = placePlayer(item.image,miny,maxy);
+  }
+
+  createsImgPositionWeapon(weapon1);
+  createsImgPositionWeapon(weapon2);
+  createsImgPositionWeapon(weapon3);
+  createsImgPositionWeapon(weapon4);
   
-  placePlayer(user1.image,0,9,0,3);
-  placePlayer(user2.image,0,9,6,9);
+  createsImgPositionPlayer(user1,0,3);
+  createsImgPositionPlayer(user2,6,9);
 
 
   function rayCheck(pos, stepX, stepY, steps) {
@@ -203,30 +197,30 @@ window.onload = function () {
     }
   }
 
+  //creates modal window for fight
   function fightWindow() {
-    var div = document.createElement('div');
-    div.style.width = "100%";
-    div.style.height = "100%";
-    div.style.background = "black";
-    div.style.opacity = "0.6";
-    div.style.position = "fixed";
-    div.style.zIndex = "10";
+    var modal = document.createElement('div');
+    modal.style.width = "100%";
+    modal.style.height = "100%";
+    modal.style.background = "black";
+    modal.style.opacity = "0.6";
+    modal.style.position = "fixed";
+    modal.style.zIndex = "10";
 
 
-    var div2 = document.createElement('div');
-    div2.style.width = "400px";
-    div2.style.height = "400px";
-    div2.style.position = "fixed";
-    div2.style.top = "40%";
-    div2.style.background = "red";
-    div2.style.left = "40%";
-    div2.style.zIndex = "100";
+    var modalContent = document.createElement('div');
+    modalContent.style.width = "400px";
+    modalContent.style.height = "400px";
+    modalContent.style.position = "fixed";
+    modalContent.style.top = "40%";
+    modalContent.style.background = "red";
+    modalContent.style.left = "40%";
+    modalContent.style.zIndex = "100";
    
-    document.getElementById("main").appendChild(div);
-    document.getElementById("main").appendChild(div2);
+    document.getElementById("main").appendChild(modal);
+    document.getElementById("main").appendChild(modalContent);
     newSound = new sound('Sound/battle.mp3')
     newSound.play();
-    //window.onbeforeunload = newSound.stop();
   }
 
 
@@ -237,7 +231,25 @@ window.onload = function () {
         }
       }
 
-  var currentPlayer = user1.image;
+  //
+  function checksWeapon(position,player){
+    if (position.classList.contains('Weapon') === true ) {
+       if ($(position).children('img').attr('name')== "pig"){
+        player.inventory = weapon1;
+      $('img[src*="Imgs/pig.png"]').remove();
+      } else if ($(position).children('img').attr('name')== "horse"){
+        player.inventory = weapon2;
+      $('img[src*="Imgs/horse.png"]').remove();
+      } else if ($(position).children('img').attr('name')== "penguin"){
+        player.inventory = weapon3;
+      $('img[src*="Imgs/penguin.png"]').remove();
+      }else {
+        player.inventory = weapon4;
+      $('img[src*="Imgs/dog.png"]').remove();
+      }
+    }
+  }
+  var currentPlayer = user1;
 
   function movePlayer(currentPlayer) {
     let pos = currentPlayer.currentBlock.position;
@@ -247,25 +259,25 @@ window.onload = function () {
     // move player to highlight cell
     $('div.Available.highlight').click(function onHighlightClick(element) {
       $('div.Available.highlight').off('click');
-      //if (element.classList.contains('Weapon') == true ){
-        //currentPlayer.inventory = weapon1;
-      //}
       var currentPlayerPosition = $(currentPlayer)[0];
       var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
           neighbours.forEach(function (element) {
-        
         element.classList.remove('highlight');
-        if (element.classList.contains('Weapon') == true ){
-          currentPlayer.inventory = weapon1;
-        }
         if (element.classList.contains('dimmcell') != true){
+          //checksWeapon(element);
           element.classList.remove('Taken');
           element.classList.remove('Player');
           element.classList.add('Available');
         };
       });
-      currentPlayerPosition.remove();
+      delete currentPlayerPosition;
+      checksWeapon(this,currentPlayer);
+      //console.log($(this).children('img').attr('name'));
       appendItem(currentPlayer, this);
+      //checksWeapon(this);
+      $("#weaponplayerone").innerHTML = user1.inventory.type;
+      $("#weaponplayerone").innerHTML = user1.inventory.type;
+      //document.getElementById("weaponplayertwo").innerHTML = user2.inventory.type;
       switchTurn();
       // change player
       // remove event from current
@@ -274,18 +286,23 @@ window.onload = function () {
     //});
   }
   // changes turns between players
+  
   function switchTurn() {
-    if (currentPlayer == user1.image) {
+    if (currentPlayer == user1) {
       movePlayer(currentPlayer);
+      document.getElementById("weaponplayerone").innerHTML = user1.inventory.type;
       $('#dashTwo').removeClass('active');
       $('#dashOne').addClass('active');
-      return currentPlayer = user2.image;
+      
+      return currentPlayer = user2;
 
     } else {
       $('#dashOne').removeClass('active');
       movePlayer(currentPlayer);
+      document.getElementById("weaponplayertwo").innerHTML = user2.inventory.type;
       $('#dashTwo').addClass('active');
-      return currentPlayer = user1.image;
+      
+      return currentPlayer = user1;
     }
   }
 
