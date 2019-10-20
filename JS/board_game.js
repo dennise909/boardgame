@@ -225,7 +225,7 @@ window.onload = function () {
   }
 
 
-  function fightModeOn() {
+  function checkPlayersNeighbour() {
       var players = $('div.Taken.highlight.Player').length;
       if (players >= 2) {
           fightWindow();
@@ -256,7 +256,7 @@ window.onload = function () {
     let pos = currentPlayer.currentBlock.position;
         neighbours = getNeigbours(pos);
     //checks if more than 2 players on neighbours to start fight
-    fightModeOn();
+    checkPlayersNeighbour();
     // move player to highlight cell
     $('div.Available.highlight').click(function onHighlightClick(element) {
       $('div.Available.highlight').off('click');
@@ -273,12 +273,9 @@ window.onload = function () {
       });
       delete currentPlayerPosition;
       checksWeapon(this,currentPlayer);
-      //console.log($(this).children('img').attr('name'));
       appendItem(currentPlayer, this);
-      //checksWeapon(this);
       $("#weaponplayerone").html(user1.inventory.type);
       $("#weaponplayertwo").html(user2.inventory.type);
-      //document.getElementById("weaponplayertwo").innerHTML = user2.inventory.type;
       switchTurn();
       // change player
       // remove event from current
