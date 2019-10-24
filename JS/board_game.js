@@ -255,6 +255,7 @@ window.onload = function () {
       }
     }
   }
+  /*
   var currentPlayer = user1;
 
   function movePlayer(currentPlayer) {
@@ -288,7 +289,50 @@ window.onload = function () {
     });
     //});
   }
-  
+  */
+
+var currentPlayer = user1;
+
+function movePlayer(currentPlayer) {
+    let pos = currentPlayer.currentBlock.position;
+    neighbours = getNeigbours(pos);
+    //checks if more than 2 players on neighbours to start fight
+    checkPlayersNeighbour();
+    // move player to highlight cell
+    $('div.Available.highlight').click(function onHighlightClick(element) {
+      $('div.Available.highlight').off('click');
+
+      var currentPlayerPosition = $(currentPlayer)[0];
+      // clear current position block's classes
+      if (currentPlayerPosition.currentBlock.classList.contains('dimmcell') != true) {
+        currentPlayerPosition.currentBlock.classList.remove('Taken');
+        currentPlayerPosition.currentBlock.classList.remove('Player');
+        currentPlayerPosition.currentBlock.classList.add('Available');
+      };
+
+      // clear highlight
+      var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
+      neighbours.forEach(function (element) {
+        element.classList.remove('highlight');
+      });
+      
+      // if player managed to get a weapon and he already has one
+      // then put his previous one at the currentPlayerPosition
+      var didGetAWeaponLol = checksWeapon(this, currentPlayer);
+      // if didGetAWeaponLol and i already have one, then put old one at my old place
+      appendItem(currentPlayer, this);
+      $("#weaponplayerone").html(user1.inventory.type);
+      $("#weaponplayertwo").html(user2.inventory.type);
+      switchTurn();
+      
+      delete currentPlayerPosition;
+      // change player
+      // remove event from current
+      // add event to new
+    });
+    //});
+  }
+
 
 
 
@@ -337,49 +381,17 @@ window.onload = function () {
 
 switchTurn();
 
-function movePlayer(currentPlayer) {
-    let pos = currentPlayer.currentBlock.position;
-    neighbours = getNeigbours(pos);
-    //checks if more than 2 players on neighbours to start fight
-    checkPlayersNeighbour();
-    // move player to highlight cell
-    $('div.Available.highlight').click(function onHighlightClick(element) {
-      $('div.Available.highlight').off('click');
 
-      var currentPlayerPosition = $(currentPlayer)[0];
-      // clear current position block's classes
-      if (currentPlayerPosition.currentBlock.classList.contains('dimmcell') != true) {
-        currentPlayerPosition.currentBlock.classList.remove('Taken');
-        currentPlayerPosition.currentBlock.classList.remove('Player');
-        currentPlayerPosition.currentBlock.classList.add('Available');
-      };
 
-      // clear highlight
-      var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
-      neighbours.forEach(function (element) {
-        element.classList.remove('highlight');
-      });
-      
-      // if player managed to get a weapon and he already has one
-      // then put his previous one at the currentPlayerPosition
-      var didGetAWeaponLol = checksGettingWeapon(this, currentPlayer);
-      // if didGetAWeaponLol and i already have one, then put old one at my old place
-      appendItem(currentPlayer, this);
-      $("#weaponplayerone").html(user1.inventory.type);
-      $("#weaponplayertwo").html(user2.inventory.type);
-      switchTurn();
-      
-      delete currentPlayerPosition;
-      // change player
-      // remove event from current
-      // add event to new
-    });
-    //});
-  }
+
+ 
+
 
 
 
 
 }
+
+
 
 
