@@ -214,19 +214,39 @@ window.onload = function () {
 
 
     var modalContent = document.createElement('div');
+    modalContent.id = "fightWindow"
     modalContent.style.width = "400px";
     modalContent.style.height = "400px";
     modalContent.style.position = "fixed";
     modalContent.style.top = "40%";
     modalContent.style.bottom = "40%";
-    modalContent.style.background = "#F1CAD8";
+    modalContent.style.backgroundImage = "url('Imgs/background_fight.jpg')";
+    modalContent.style.backgroundSize = "cover";
     modalContent.style.left = "40%";
     modalContent.style.zIndex = "100";
 
+    let containerPlayerOne = document.createElement("div");
+    imagePlOne = user1.image
+    containerPlayerOne.appendChild(user1.image);
+    containerPlayerOne.style.cssFloat = "left";
+    containerPlayerOne.style.position = "absolute";
+    containerPlayerOne.style.bottom = "75px";
+
+    let containerPlayerTwo = document.createElement("div");
+    imagePlOne = user2.image
+    containerPlayerTwo.appendChild(user2.image);
+    containerPlayerTwo.style.cssFloat = "right";
+    containerPlayerTwo.style.position = "absolute";
+    containerPlayerTwo.style.bottom = "75px";
+    containerPlayerTwo.style.right = "1px";
+
+
     document.getElementById("main").appendChild(modal);
     document.getElementById("main").appendChild(modalContent);
+    $("#fightWindow").append(containerPlayerOne);
+    $("#fightWindow").append(containerPlayerTwo);
     newSound = new sound('Sound/battle.mp3')
-    //newSound.play();
+    newSound.play();
   }
 
 
@@ -342,7 +362,7 @@ function movePlayer(currentPlayer) {
       // then put his previous one at the currentPlayerPosition
       var didGetAWeaponLol = checksWeapon(this, currentPlayer);
       // if didGetAWeaponLol and i already have one, then put old one at my old place
-      appendItem(currentPlayer, this);
+      appendItem(currentPlayer, this,"Player");
       $("#weaponplayerone").html(user1.inventory.type);
       $("#weaponplayertwo").html(user2.inventory.type);
       switchTurn();
@@ -381,46 +401,7 @@ function movePlayer(currentPlayer) {
 
   
 
- function movePlayer(currentPlayer) {
-  let pos = currentPlayer.currentBlock.position;
-  neighbours = getNeigbours(pos);
-  //checks if more than 2 players on neighbours to start fight
-  checkPlayersNeighbour();
-  // move player to highlight cell
-  $('div.Available.highlight').click(function onHighlightClick(element) {
-    $('div.Available.highlight').off('click');
 
-    var currentPlayerPosition = $(currentPlayer)[0];
-    // clear current position block's classes
-    if (currentPlayerPosition.currentBlock.classList.contains('dimmcell') != true) {
-      currentPlayerPosition.currentBlock.classList.remove('Taken');
-      currentPlayerPosition.currentBlock.classList.remove('Player');
-      currentPlayerPosition.currentBlock.classList.add('Available');
-    };
-
-    // clear highlight
-    var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
-    neighbours.forEach(function (element) {
-      element.classList.remove('highlight');
-    });
-    
-    // if player managed to get a weapon and he already has one
-    // then put his previous one at the currentPlayerPosition
-    var didGetAWeaponLol = checksWeapon(this, currentPlayer);
-   
-    // if didGetAWeaponLol and i already have one, then put old one at my old place
-    appendItem(currentPlayer, this,"Player");
-    $("#weaponplayerone").html(user1.inventory.type);
-    $("#weaponplayertwo").html(user2.inventory.type);
-    switchTurn();
-    
-    delete currentPlayerPosition;
-    // change player
-    // remove event from current
-    // add event to new
-  });
-  //});
-}
 
 // changes turns between players
 function switchTurn() {
