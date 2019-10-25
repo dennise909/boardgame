@@ -25,7 +25,7 @@ window.onload = function () {
 
 
   //creates sprites as img 
-  function placeItem(item) {
+  function createsImgItem(item) {
     let itemSprite = document.createElement('img');
     itemSprite.setAttribute('src', item.sprite);
     itemSprite.setAttribute('name', item.type);
@@ -42,11 +42,11 @@ window.onload = function () {
 
 
   //adds player to new position
-  function appendItem(nameItem, element) {
+  function appendItem(nameItem, element,type) {
     element.appendChild(nameItem.image);
     element.classList.remove('Available');
     element.classList.add('Taken');
-    element.classList.add('Player');
+    element.classList.add(type);
     nameItem.currentBlock = element;
   }
 
@@ -122,12 +122,12 @@ window.onload = function () {
 
   //places weapons and player
   function createsImgPositionWeapon(item) {
-    item.image = placeItem(item);
+    item.image = createsImgItem(item);
     item.currentBlock = addWeapon(item.image);
   }
 
   function createsImgPositionPlayer(item, miny, maxy) {
-    item.image = placeItem(item);
+    item.image = createsImgItem(item);
     item.currentBlock = placePlayer(item.image, miny, maxy);
   }
 
@@ -232,7 +232,7 @@ window.onload = function () {
 
   function checkPlayersNeighbour() {
     var players = $('div.Taken.highlight.Player').length;
-    if (players >= 2) {
+    if (players > 0) {
       fightWindow();
     }
   }
@@ -253,48 +253,63 @@ window.onload = function () {
         player.inventory = weapon4;
         $('img[src*="Imgs/dog.png"]').remove();
       }
+    return true
     }
+  return false
   }
   var currentPlayer = user1;
-
+  /*
   function movePlayer(currentPlayer) {
     let pos = currentPlayer.currentBlock.position;
+    console.log(pos);
     neighbours = getNeigbours(pos);
     //checks if more than 2 players on neighbours to start fight
-    checkPlayersNeighbour();
+    //checkPlayersNeighbour();
     // move player to highlight cell
     $('div.Available.highlight').click(function onHighlightClick(element) {
       $('div.Available.highlight').off('click');
+
       var currentPlayerPosition = $(currentPlayer)[0];
+      console.log(currentPlayerPosition)
+      if (currentPlayerPosition.classList.contains('dimmcell') != true) {
+        currentPlayerPosition.classList.remove('Taken');
+        currentPlayerPosition.currentBlock.classList.remove('Player');
+        currentPlayerPosition.classList.add('Available');
+      };
+
       var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
       neighbours.forEach(function (element) {
-        element.classList.remove('highlight');
-        if (element.classList.contains('dimmcell') != true) {
-          //checksWeapon(element);
-          element.classList.remove('Taken');
-          element.classList.remove('Player');
-          element.classList.add('Available');
-        };
+      element.classList.remove('highlight');
       });
+      // clear current position block's classes
+      
+      // clear highlight
+      
+      
+      // if player managed to get a weapon and he already has one
+      // then put his previous one at the currentPlayerPosition
+      var didGetAWeaponLol = checksGettingWeapon(this, currentPlayer);
+      if (didGetAWeaponLol === true){
+        if(currentPlayer.inventory.type != 'Default'){
+          let weapon = createsImgItem(currentPlayer.inventory.sprite); 
+        appendItem(pos,weapon,"Weapon");
+        }
+        
+      }
+      // if didGetAWeaponLol and i already have one, then put old one at my old place
       delete currentPlayerPosition;
-      checksWeapon(this, currentPlayer);
-      appendItem(currentPlayer, this);
+      appendItem(currentPlayer.image, this,"Player");
       $("#weaponplayerone").html(user1.inventory.type);
       $("#weaponplayertwo").html(user2.inventory.type);
       switchTurn();
+      
+      
+      
       // change player
       // remove event from current
       // add event to new
     });
-    //});
   }
-  
-
-
-
-
-
-
   // changes turns between players
   function switchTurn() {
     if (currentPlayer == user1) {
@@ -313,22 +328,83 @@ window.onload = function () {
     }
   }
 
+  */
+
+ function movePlayer(currentPlayer) {
+  let pos = currentPlayer.currentBlock.position;
+  neighbours = getNeigbours(pos);
+  //checks if more than 2 players on neighbours to start fight
+  checkPlayersNeighbour();
+  // move player to highlight cell
+  $('div.Available.highlight').click(function onHighlightClick(element) {
+    $('div.Available.highlight').off('click');
+
+    var currentPlayerPosition = $(currentPlayer)[0];
+    // clear current position block's classes
+    if (currentPlayerPosition.currentBlock.classList.contains('dimmcell') != true) {
+      currentPlayerPosition.currentBlock.classList.remove('Taken');
+      currentPlayerPosition.currentBlock.classList.remove('Player');
+      currentPlayerPosition.currentBlock.classList.add('Available');
+    };
+
+    // clear highlight
+    var neighbours = getNeigbours(currentPlayerPosition.currentBlock.position);
+    neighbours.forEach(function (element) {
+      element.classList.remove('highlight');
+    });
+    
+    // if player managed to get a weapon and he already has one
+    // then put his previous one at the currentPlayerPosition
+    var didGetAWeaponLol = checksWeapon(this, currentPlayer);
+   
+    // if didGetAWeaponLol and i already have one, then put old one at my old place
+    appendItem(currentPlayer, this,"Player");
+    $("#weaponplayerone").html(user1.inventory.type);
+    $("#weaponplayertwo").html(user2.inventory.type);
+    switchTurn();
+    
+    delete currentPlayerPosition;
+    // change player
+    // remove event from current
+    // add event to new
+  });
+  //});
+}
+
+// changes turns between players
+function switchTurn() {
+  if (currentPlayer == user1) {
+    movePlayer(currentPlayer);
+    $('#dashTwo').removeClass('active');
+    $('#dashOne').addClass('active');
+    fightModeOn(currentPlayer);
+    return currentPlayer = user2;
+
+  } else {
+    $('#dashOne').removeClass('active');
+    movePlayer(currentPlayer);
+    $('#dashTwo').addClass('active');
+    fightModeOn(currentPlayer);
+    return currentPlayer = user1;
+  }
+}
+
 
 
   function fightModeOn(activePlayer) {
     if (activePlayer === user1){
-      if (activePlayer.health > 0){
+      if (activePlayer.health >= 0){
         let newHealth = user1.health - user2.inventory.damage;
         user1.health = newHealth;
-        console.log(newHealth);
+        console.log("Im player one " + newHealth);
       }else {
         console.log("game over")
       } 
     }else{
-      if (activePlayer.health > 0){
+      if (activePlayer.health >= 0){
         let newHealth = user2.health - user1.inventory.damage;
-        console.log(newHealth);
         user2.health = newHealth;
+        console.log("Im player two " + newHealth);
       }else {
         console.log("game over")
     }
