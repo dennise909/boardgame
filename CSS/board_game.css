@@ -102,3 +102,47 @@ img.small{
   text-decoration: none;
   cursor: pointer;
 }
+
+.rotate-button {
+  display:inline-block;
+  width:150px;
+  height: 30px;
+  text-align:center;
+  transform-style:preserve-3d;
+  cursor:pointer;
+  transition:all .3s ease;
+  font-family: 'arial'
+}
+.rotate-button .rotate-button-face, .rotate-button .rotate-button-face-back {
+  position:absolute;
+  display:block;
+  border:1px solid #e86128;
+  transition:all .5s;
+  color:#e86128;
+  text-decoration:none;
+  width:150px;
+  height: 30px;
+  line-height:30px;
+  border-radius: 4px;
+}
+.rotate-button .rotate-button-face {
+  background-color:#fff;
+  transform:translateZ(15px);
+}
+.rotate-button .rotate-button-face-back {
+  background-color:#d8dfe6;
+  color:#e86128;
+  border:1px solid #e86128;
+  transform:rotateX(-90deg) translateZ(15px);
+}
+.rotate-button:hover {
+  transform:rotateX(90deg);
+}
+.center {
+  position: absolute;
+  left: 33%;
+  top: 30%;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+}
