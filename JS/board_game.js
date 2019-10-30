@@ -25,7 +25,8 @@ window.onload = function () {
   itemImage = document.createElement('img');
   itemImage.setAttribute('src','Imgs/pig.png');
   itemImage.id = "itemimg"
-  pig = new fightDesign(itemImage,"right","120px","#start-window")
+  itemImage.style.width = "50%"
+  pig = new fightDesign(itemImage,"right","120px",null,"#start-window")
   $(document).mousemove(function(e){
     $("#itemimg").css({left:e.movementX, top:e.movementY});
 });
@@ -262,13 +263,14 @@ window.onload = function () {
 
   }
 
-  function fightDesign(img,position,rightpx,window){
+  function fightDesign(img,position,rightpx,leftpx,window){
     this.containerImage = document.createElement("div");
     this.containerImage.appendChild(img);
     this.containerImage.style.cssFloat = position;
     this.containerImage.style.position = "absolute";
     this.containerImage.style.bottom = "75px";
     this.containerImage.style.right = rightpx;
+    this.containerImage.style.left = leftpx;
 
     //let containerPlayerTwo = document.createElement("div");
     //imagePlOne = user2.image
@@ -290,10 +292,10 @@ window.onload = function () {
     var players = $('div.Taken.highlight.Player').length;
     if (players > 0) {
       newFightWindow = new modalWindow("fightWindow","main2");
-      PlayerOne = new fightDesign(user1.image,"left",null,"#fightWindow");
-      PlayerTwo = new fightDesign(user2.image,"right","1px","#fightWindow");
-      CurrentWeaponPOne = new fightDesign(user1.inventory.image,"left",null,"#fightWindow");
-      CurrentWeaponPTwo = new fightDesign(user2.inventory.image,"right","50px","#fightWindow");
+      PlayerOne = new fightDesign(user1.image,"left",null,null,"#fightWindow");
+      PlayerTwo = new fightDesign(user2.image,"right","1px",null,"#fightWindow");
+      CurrentWeaponPOne = new fightDesign(user1.inventory.image,"left",null,"80px","#fightWindow");
+      CurrentWeaponPTwo = new fightDesign(user2.inventory.image,"right","50px",null,"#fightWindow");
       fightModeOn(activePlay);
       //newSound = new sound('Sound/battle.mp3')
       //newSound.play();
@@ -301,7 +303,7 @@ window.onload = function () {
   }
 
   //
-  function checksWeapon(position, player) {
+  function addWeaponToPlayer(position, player) {
     if (position.classList.contains('Weapon') === true) {
       if ($(position).children('img').attr('name') === weapon1.type) {
         player.inventory = weapon1;
@@ -351,7 +353,13 @@ function movePlayer(currentPlayer) {
       
       // if player managed to get a weapon and he already has one
       // then put his previous one at the currentPlayerPosition
-      var didGetAWeaponLol = checksWeapon(this, currentPlayer);
+      var previousWeapon = currentPlayer.inventory;
+          previousPosition = currentPlayerPosition.currentBlock
+      var didGetAWeapon = addWeaponToPlayer(this, currentPlayer);
+      if (previousWeapon.type !== "Default" && didGetAWeapon === true) {
+        previousPosition.appendChild(previousWeapon.image);
+        previousPosition.classList.add('Weapon');
+      }
       // if didGetAWeaponLol and i already have one, then put old one at my old place
       appendItem(currentPlayer, this,"Player");
       $("#weaponplayerone").html(user1.inventory.type);
@@ -365,26 +373,6 @@ function movePlayer(currentPlayer) {
     });
     //});
   }
-/*
-  // changes turns between players
-  function switchTurn() {
-    if (currentPlayer == user1) {
-      movePlayer(currentPlayer);
-      $('#dashTwo').removeClass('active');
-      $('#dashOne').addClass('active');
-      fightModeOn(currentPlayer);
-      return currentPlayer = user2;
-
-    } else {
-      $('#dashOne').removeClass('active');
-      movePlayer(currentPlayer);
-      $('#dashTwo').addClass('active');
-      fightModeOn(currentPlayer);
-      return currentPlayer = user1;
-    }
-  }
-*/
-
 // changes turns between players
 function switchTurn() {
   if (currentPlayer == user1) {
@@ -403,34 +391,41 @@ function switchTurn() {
   }
 }
 
+switchTurn();
+
+
   function fightModeOn(activePlayer) {
-    if (activePlayer === user1){
-      if (activePlayer.health >= 0){
-        playerHere = $('img[src*="Imgs/zombie.png"]')[0]
-        playerHere.click(function () {
+    currentPlayer = activePlayer
+    if (currentPlayer === user1){
+      $("[name='Adventurer']").click(function clickDamage() {
+      if (currentPlayer.health >= 0){
+        
         let newHealth = user1.health - user2.inventory.damage;
         user1.health = newHealth;
         console.log("Im player one " + newHealth);
-      });
+      return currentPlayer = user2;
       }else {
         console.log("game over")
-      } 
+      }
+      });
+       
     }else{
-      if (activePlayer.health >= 0){
-        $('img[src*="Imgs/adventurer_jump.png"]')[0].click(function () {
-        let newHealth = user2.health - user1.inventory.damage;
-        user2.health = newHealth;
-        console.log("Im player two " + newHealth);
-      });
+      $("[name='Zombie']").click(function clickDamage() {
+      if (currentPlayer.health >= 0){  
+      let newHealth = user2.health - user1.inventory.damage;
+      user2.health = newHealth;
+      console.log("Im player two " + newHealth);
+      return currentPlayer = user1;
       }else {
         console.log("game over")
     }
-    return activePlayer = user1;
-    }
+    });
     
   }
+     
+  }
 
-switchTurn();
+
 
 
 
