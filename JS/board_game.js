@@ -395,11 +395,11 @@ switchTurn();
 
 
   function fightModeOn(activePlayer) {
-    currentPlayer = activePlayer
-    if (currentPlayer === user1){
-      $("[name='Adventurer']").click(function clickDamage() {
-      if (currentPlayer.health >= 0){
-        
+      currentPlayer = activePlayer
+    
+      $("[name='Adventurer']").click(function() {
+      if (currentPlayer === user1){
+      if (currentPlayer.health >= 0){   
         let newHealth = user1.health - user2.inventory.damage;
         user1.health = newHealth;
         console.log("Im player one " + newHealth);
@@ -407,10 +407,9 @@ switchTurn();
       }else {
         console.log("game over")
       }
-      });
-       
-    }else{
-      $("[name='Zombie']").click(function clickDamage() {
+      }});
+      
+      $("[name='Zombie']").click(function() {
       if (currentPlayer.health >= 0){  
       let newHealth = user2.health - user1.inventory.damage;
       user2.health = newHealth;
