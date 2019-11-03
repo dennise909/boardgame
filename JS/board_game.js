@@ -27,8 +27,12 @@ window.onload = function () {
   itemImage.id = "itemimg"
   itemImage.style.width = "50%"
   pig = new fightDesign(itemImage,"right","120px",null,"#start-window")
-  $(document).mousemove(function(e){
-    $("#itemimg").css({left:e.movementX, top:e.movementY});
+  $("#itemimg").click(function(){
+    if ($(this).hasClass('bounce-top')){
+    $('#itemimg').removeAttr("class",'bounce-top');
+  }
+    else{
+      $(this).addClass("bounce-top")}
 });
   //function gridCreator(){
   //Creating the grid 
@@ -330,10 +334,6 @@ function movePlayer(currentPlayer) {
     neighbours = getNeigbours(pos);
     //checks if more than 2 players on neighbours to start fight
     checkPlayersNeighbour(currentPlayer);
-   // playerOne = new fightDesign(user1,"left",null,"fightWindow");
-    //playerTwo = new fightDesign(user2,"right","1px","fightWindow");
-    //newSound = new sound('Sound/battle.mp3')
-    // move player to highlight cell
     $('div.Available.highlight').click(function onHighlightClick(element) {
       $('div.Available.highlight').off('click');
 
@@ -399,24 +399,24 @@ switchTurn();
     
       $("[name='Adventurer']").click(function() {
       if (currentPlayer === user1){
-      if (currentPlayer.health >= 0){   
+      if (currentPlayer.health > 0){   
         let newHealth = user1.health - user2.inventory.damage;
         user1.health = newHealth;
-        console.log("Im player one " + newHealth);
+        console.log("Score player one " + newHealth);
       return currentPlayer = user2;
       }else {
-        console.log("game over")
+        console.log("Player one wins")
       }
       }});
       
       $("[name='Zombie']").click(function() {
-      if (currentPlayer.health >= 0){  
+      if (currentPlayer.health > 0){  
       let newHealth = user2.health - user1.inventory.damage;
       user2.health = newHealth;
-      console.log("Im player two " + newHealth);
+      console.log("Score player two " + newHealth);
       return currentPlayer = user1;
       }else {
-        console.log("game over")
+        console.log("Player two wins")
     }
     });
     
@@ -435,7 +435,7 @@ switchTurn();
 
 
 
-}
+
 
 
 
