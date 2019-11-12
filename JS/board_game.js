@@ -424,7 +424,61 @@ switchTurn();
      
   }
 
+/*
 
+ function finishfight() {
+   //just unattach events
+   //$('div.Available.highlight').off('click');
+ }
+
+  
+  function attackUser(attacker, defender) {
+    let newHealth = defender.health - attacker.inventory.damage;
+    defender.health = newHealth;
+
+    checkFight();
+  }
+  function checkFight() {
+    if (user1.health <= 0) {
+      console.log("Player two wins")
+      finishfight();
+    }
+    else if user2.health <= 0
+      console.log("Player one wins")
+      finishfight();
+  }
+  function fightModeOn(activePlayer) {
+      currentPlayer = activePlayer
+    
+      $("[name='Adventurer']").click(function() {
+      if (currentPlayer === user1){
+        //run attackUser here
+
+      if (currentPlayer.health > 0){   
+        let newHealth = user1.health - user2.inventory.damage;
+        user1.health = newHealth;
+        console.log("Score player one " + newHealth);
+        return currentPlayer = user2;
+      }else {
+        console.log("Player one wins")
+      }
+      }});
+      
+      $("[name='Zombie']").click(function() {
+      if (currentPlayer.health > 0){  
+      let newHealth = user2.health - user1.inventory.damage;
+      user2.health = newHealth;
+      console.log("Score player two " + newHealth);
+      return currentPlayer = user1;
+      }else {
+        console.log("Player two wins")
+        finishfight();
+    }
+    });
+    
+  }
+     
+  */
 
 
 
