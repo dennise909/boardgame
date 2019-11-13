@@ -425,45 +425,45 @@ switchTurn();
   }
 
 /*
-function finishfight(element) {
-   //just unattach events
-   $(element).off('click');
- }
-  
-  function attackUser(attacker, defender) {
-    let newHealth = defender.health - attacker.inventory.damage;
-    defender.health = newHealth;
-    console.log("Score player " + defender.health);
-    checkFight();
-  }
-  function checkFight() {
-    if (user1.health <= 0) {
-      console.log("Player two wins")
-      finishfight("[name='Adventurer']");
+
+  function finishfight(element) {
+     //just unattach events
+     $(element).off('click');
+   }
+    
+    function attackUser(attacker, defender) {
+      if (attacker.health >= 0){
+      let newHealth = defender.health - attacker.inventory.damage;
+      defender.health = newHealth;
+      console.log("Score player " + defender.health);
+      return currentActPlayer = defender
+      }else {
+        checkFight();
+      }
     }
-    else if (user2.health <= 0)
-      console.log("Player one wins")
-      finishfight("[name='Zombie']");
+    function checkFight() {
+      if (user1.health <= 0) {
+        console.log("Player two wins")
+        finishfight("[name='Adventurer']");
+      }
+      else if (user2.health <= 0)
+        console.log("Player one wins")
+        finishfight("[name='Zombie']");
+    }
+    function fightModeOn(activePlayer) {
+        currentActPlayer = activePlayer   
+      $("[name='Adventurer']").click(function() {  
+        if (currentActPlayer === user1){ 
+          attackUser(user1,user2); 
+        }
+      });
+
+      $("[name='Zombie']").click(function() {
+        if (currentActPlayer === user2){ 
+          attackUser(user2,user1);
+      }
+    });
   }
-  function fightModeOn(activePlayer) {
-      currentPlayer = activePlayer   
-    
-    $("[name='Adventurer']").click(function() {  
-      if (currentPlayer === user1){
-        //run attackUser here
-        attackUser(user1,user2); }
-      return currentPlayer = user2;
-      });
-    
-    $("[name='Zombie']").click(function() {
-      if (currentPlayer === user1){
-        attackUser(user2,user1);
-      }
-      return currentPlayer = user1;
-      });
-      
-      }
- 
      
   */
 
