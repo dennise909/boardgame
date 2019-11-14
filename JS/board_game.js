@@ -249,18 +249,18 @@ window.onload = function () {
     this.modal.style.position = "fixed";
     this.modal.style.zIndex = "100";
 
-
     this.modalContent = document.createElement('div');
     this.modalContent.id = id
     this.modalContent.style.width = "400px";
     this.modalContent.style.height = "400px";
     this.modalContent.style.position = "fixed";
-    this.modalContent.style.top = "40%";
+    this.modalContent.style.top = "50%";
     this.modalContent.style.bottom = "40%";
     this.modalContent.style.backgroundImage = "url('Imgs/background_fight.jpg')";
     this.modalContent.style.backgroundSize = "cover";
-    this.modalContent.style.left = "40%";
+    this.modalContent.style.left = "50%";
     this.modalContent.style.zIndex = "100";
+    this.modalContent.style.transform = "translate(-50%, -50%)";
     
     document.getElementById(div).appendChild(this.modal);
     document.getElementById(div).appendChild(this.modalContent);
