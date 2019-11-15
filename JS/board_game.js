@@ -3,7 +3,7 @@ window.onload = function () {
   function startGame() {
     let startButton = document.createElement("a");
     startButton.id = "play-but"
-    startButton.classList.add("center","rotate-button")
+    startButton.classList.add("center", "rotate-button")
     let spanButton = document.createElement("span")
     spanButton.id = "button-hover"
     spanButton.classList.add("rotate-button-face")
@@ -15,25 +15,26 @@ window.onload = function () {
     document.getElementById("play-but").appendChild(spanButton2);
     $("#button-hover").html("Play!");
     $("#button-face-back").html("Now!");
-    $("#button-face-back").click(function() {
+    $("#button-face-back").click(function () {
       document.getElementById("main").style.display = "none";
     });
 
   }
-  beginningWindow = new modalWindow("start-window","main");
+  beginningWindow = new modalWindow("start-window", "main");
   startGame();
   itemImage = document.createElement('img');
-  itemImage.setAttribute('src','Imgs/pig.png');
+  itemImage.setAttribute('src', 'Imgs/pig.png');
   itemImage.id = "itemimg"
   itemImage.style.width = "50%"
-  pig = new fightDesign(itemImage,"right","120px",null,"#start-window")
-  $("#itemimg").click(function(){
-    if ($(this).hasClass('bounce-top')){
-    $('#itemimg').removeAttr("class",'bounce-top');
-  }
-    else{
-      $(this).addClass("bounce-top")}
-});
+  pig = new fightDesign(itemImage, "right", "120px", null, "75px", null, "#start-window")
+  $("#itemimg").click(function () {
+    if ($(this).hasClass('bounce-top')) {
+      $('#itemimg').removeAttr("class", 'bounce-top');
+    }
+    else {
+      $(this).addClass("bounce-top")
+    }
+  });
   //function gridCreator(){
   //Creating the grid 
   let width = 10;
@@ -58,7 +59,7 @@ window.onload = function () {
     container.appendChild(breaker);
     breaker.className = 'clear';
   }
-//}
+  //}
 
 
   //creates sprites as img 
@@ -79,7 +80,7 @@ window.onload = function () {
 
 
   //adds player to new position
-  function appendItem(nameItem, element,type) {
+  function appendItem(nameItem, element, type) {
     element.appendChild(nameItem.image);
     element.classList.remove('Available');
     element.classList.add('Taken');
@@ -240,14 +241,15 @@ window.onload = function () {
   }
 
   //creates modal window for fight
-  function modalWindow(id,div) {
+  function modalWindow(id, div) {
     this.modal = document.createElement('div');
     this.modal.style.width = "100%";
     this.modal.style.height = "100%";
     this.modal.style.background = "black";
-    this.modal.style.opacity = "10";
+    this.modal.style.opacity = "0.8";
     this.modal.style.position = "fixed";
     this.modal.style.zIndex = "100";
+
 
     this.modalContent = document.createElement('div');
     this.modalContent.id = id
@@ -261,18 +263,19 @@ window.onload = function () {
     this.modalContent.style.left = "50%";
     this.modalContent.style.zIndex = "100";
     this.modalContent.style.transform = "translate(-50%, -50%)";
-    
+
     document.getElementById(div).appendChild(this.modal);
     document.getElementById(div).appendChild(this.modalContent);
 
   }
 
-  function fightDesign(img,position,rightpx,leftpx,window){
+  function fightDesign(img, position, rightpx, leftpx, bottompx, toppx, window) {
     this.containerImage = document.createElement("div");
     this.containerImage.appendChild(img);
     this.containerImage.style.cssFloat = position;
     this.containerImage.style.position = "absolute";
-    this.containerImage.style.bottom = "75px";
+    this.containerImage.style.bottom = bottompx;
+    this.containerImage.style.top = toppx;
     this.containerImage.style.right = rightpx;
     this.containerImage.style.left = leftpx;
 
@@ -285,22 +288,25 @@ window.onload = function () {
     //containerPlayerTwo.style.right = "1px";
 
     $(window).append(this.containerImage);
-   // $("#fightWindow").append(containerPlayerTwo);
-    
-   }
-  
+    // $("#fightWindow").append(containerPlayerTwo);
+
+  }
+
 
 
   function checkPlayersNeighbour(actPlayer) {
     let activePlay = actPlayer
     var players = $('div.Taken.highlight.Player').length;
     if (players > 0) {
-      newFightWindow = new modalWindow("fightWindow","main2");
-      PlayerOne = new fightDesign(user1.image,"left",null,null,"#fightWindow");
-      PlayerTwo = new fightDesign(user2.image,"right","1px",null,"#fightWindow");
-      CurrentWeaponPOne = new fightDesign(user1.inventory.image,"left",null,"80px","#fightWindow");
-      CurrentWeaponPTwo = new fightDesign(user2.inventory.image,"right","50px",null,"#fightWindow");
-      fightModeOn(activePlay);
+      newFightWindow = new modalWindow("fightWindow", "main2");
+      PlayerOne = new fightDesign(user1.image, "left", null, null, "75px", null, "#fightWindow");
+      PlayerTwo = new fightDesign(user2.image, "right", "1px", null, "75px", null, "#fightWindow");
+      CurrentWeaponPOne = new fightDesign(user1.inventory.image, "left", null, "80px", "75px", null, "#fightWindow");
+      CurrentWeaponPTwo = new fightDesign(user2.inventory.image, "right", "50px", null, "75px", null, "#fightWindow");
+      scorePlayerOne = document.createElement("div");
+
+      ScorePlayerTwo =
+        fightModeOn(activePlay);
       //newSound = new sound('Sound/battle.mp3')
       //newSound.play();
     }
@@ -322,14 +328,14 @@ window.onload = function () {
         player.inventory = weapon4;
         $('img[src*="Imgs/dog.png"]').remove();
       }
-    return true
+      return true
     }
-  return false
+    return false
   }
 
-var currentPlayer = user1;
+  var currentPlayer = user1;
 
-function movePlayer(currentPlayer) {
+  function movePlayer(currentPlayer) {
     let pos = currentPlayer.currentBlock.position;
     neighbours = getNeigbours(pos);
     //checks if more than 2 players on neighbours to start fight
@@ -350,22 +356,22 @@ function movePlayer(currentPlayer) {
       neighbours.forEach(function (element) {
         element.classList.remove('highlight');
       });
-      
+
       // if player managed to get a weapon and he already has one
       // then put his previous one at the currentPlayerPosition
       var previousWeapon = currentPlayer.inventory;
-          previousPosition = currentPlayerPosition.currentBlock
+      previousPosition = currentPlayerPosition.currentBlock
       var didGetAWeapon = addWeaponToPlayer(this, currentPlayer);
       if (previousWeapon.type !== "Default" && didGetAWeapon === true) {
         previousPosition.appendChild(previousWeapon.image);
         previousPosition.classList.add('Weapon');
       }
       // if didGetAWeaponLol and i already have one, then put old one at my old place
-      appendItem(currentPlayer, this,"Player");
+      appendItem(currentPlayer, this, "Player");
       $("#weaponplayerone").html(user1.inventory.type);
       $("#weaponplayertwo").html(user2.inventory.type);
       switchTurn();
-      
+
       delete currentPlayerPosition;
       // change player
       // remove event from current
@@ -373,99 +379,108 @@ function movePlayer(currentPlayer) {
     });
     //});
   }
-// changes turns between players
-function switchTurn() {
-  if (currentPlayer == user1) {
-    movePlayer(currentPlayer);
-    $('#dashTwo').removeClass('active');
-    $('#dashOne').addClass('active');
-    //fightModeOn(currentPlayer);
-    return currentPlayer = user2;
+  // changes turns between players
+  function switchTurn() {
+    if (currentPlayer == user1) {
+      movePlayer(currentPlayer);
+      $('#dashTwo').removeClass('active');
+      $('#dashOne').addClass('active');
+      //fightModeOn(currentPlayer);
+      return currentPlayer = user2;
 
-  } else {
-    $('#dashOne').removeClass('active');
-    movePlayer(currentPlayer);
-    $('#dashTwo').addClass('active');
-    //fightModeOn(currentPlayer);
-    return currentPlayer = user1;
+    } else {
+      $('#dashOne').removeClass('active');
+      movePlayer(currentPlayer);
+      $('#dashTwo').addClass('active');
+      //fightModeOn(currentPlayer);
+      return currentPlayer = user1;
+    }
   }
+
+  switchTurn();
+
+
+  function finishfight() {
+    //just unattach events
+    $("[name='Adventurer']").off('click');
+    $("[name='Zombie']").off('click');
+  }
+
+  function attackUser(attacker, defender) {
+    let newHealth = defender.health - attacker.inventory.damage;
+    if (newHealth <= 0)
+      newHealth = 0;
+    defender.health = newHealth;
+    console.log("Score player " + defender.health);
+    checkFight();
+  }
+
+  function checkFight() {
+    if (user1.health <= 0) {
+      console.log("Player two wins")
+      finishfight();
+    }
+    else if (user2.health <= 0) {
+      console.log("Player one wins");
+      finishfight();
+    } else {
+      if (currentActPlayer === user1) {
+        currentActPlayer = user2;
+      } else {
+        currentActPlayer = user1;
+      }
+      //currentActPlayer = currentActPlayer === user1 ? user2 : user1;
+    }
+  }
+  function fightModeOn(activePlayer) {
+    currentActPlayer = activePlayer
+    $("[name='Adventurer']").click(function () {
+      if (currentActPlayer === user1) {
+        attackUser(user1, user2);
+      }
+    });
+
+    $("[name='Zombie']").click(function () {
+      if (currentActPlayer === user2) {
+        attackUser(user2, user1);
+      }
+    });
+  }
+
+  /* 
+      function fightModeOn(activePlayer) {
+        currentPlayer = activePlayer
+      
+        $("[name='Adventurer']").click(function() {
+        if (currentPlayer === user1){
+          if (currentPlayer.health > 0){   
+            attackUser(user1,user2)
+        return currentPlayer = user2;
+        }else {
+          checkFight() 
+        }
+        }});
+        
+        $("[name='Zombie']").click(function() {
+        if (currentPlayer.health > 0){  
+          attackUser(user2,user1)
+        return currentPlayer = user1;
+        }else {
+          checkFight() 
+      }
+      });
+      
+    }
+       
+  */
+
+
+
+
+
+
 }
 
-switchTurn();
-
-
-  function fightModeOn(activePlayer) {
-      currentPlayer = activePlayer
-    
-      $("[name='Adventurer']").click(function() {
-      if (currentPlayer === user1){
-      if (currentPlayer.health > 0){   
-        let newHealth = user1.health - user2.inventory.damage;
-        user1.health = newHealth;
-        console.log("Score player one " + newHealth);
-      return currentPlayer = user2;
-      }else {
-        console.log("Player one wins")
-      }
-      }});
-      
-      $("[name='Zombie']").click(function() {
-      if (currentPlayer.health > 0){  
-      let newHealth = user2.health - user1.inventory.damage;
-      user2.health = newHealth;
-      console.log("Score player two " + newHealth);
-      return currentPlayer = user1;
-      }else {
-        console.log("Player two wins")
-    }
-    });
-    
-  }
-     
-  }
-
-/*
-
-  function finishfight(element) {
-     //just unattach events
-     $(element).off('click');
-   }
-    
-    function attackUser(attacker, defender) {
-      if (attacker.health >= 0){
-      let newHealth = defender.health - attacker.inventory.damage;
-      defender.health = newHealth;
-      console.log("Score player " + defender.health);
-      return currentActPlayer = defender
-      }else {
-        checkFight();
-      }
-    }
-    function checkFight() {
-      if (user1.health <= 0) {
-        console.log("Player two wins")
-        finishfight("[name='Adventurer']");
-      }
-      else if (user2.health <= 0)
-        console.log("Player one wins")
-        finishfight("[name='Zombie']");
-    }
-    function fightModeOn(activePlayer) {
-        currentActPlayer = activePlayer   
-      $("[name='Adventurer']").click(function() {  
-        if (currentActPlayer === user1){ 
-          attackUser(user1,user2); 
-        }
-      });
-
-      $("[name='Zombie']").click(function() {
-        if (currentActPlayer === user2){ 
-          attackUser(user2,user1);
-      }
-    });
-  }
-     
-  */
 
 
 
